@@ -9,16 +9,12 @@ public class Book {
     private final String publisher;
     private final String date;
     private final String edition;
-
     private final String cover;
-
     private final String language;
-     private final String rating;
+    private final String rating;
     private final ArrayList<String> tags;
     private final String numberofPages;
     private final String coverType;
-
-
 
     public Book(String title,String subtitle,ArrayList<String>authors,ArrayList<String>translators, String isbn,String publisher,String date, String edition,String cover,String language,String rating,ArrayList<String>tags,String numberofPages,String coverType){
         this.title=title;
