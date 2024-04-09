@@ -21,6 +21,7 @@ import java.util.Optional;
 
 public class HelloController {
 
+
     private ArrayList<Book> books;
     @FXML
     private TextField titleField;
@@ -104,70 +105,4 @@ public class HelloController {
         exportToJson(f.getAbsolutePath());
     }
 
-    private void addButton(ActionEvent event)
-    {
-        String title = titleField.getText();
-        String subtitle = subtitleField.getText();
-        ArrayList<String> authors = new ArrayList<>(authorsListView.getItems());
-        ArrayList<String> translators = new ArrayList<>(translatorsLView.getItems());
-        String isbn = isbnField.getText();
-        String publisher = publisherField.getText();
-        String date = dateField.getText();
-        String edition = editionField.getText();
-        String cover = coverField.getText();
-        String language = languageField.getText();
-        String rating = ratingField.getText();
-        ArrayList<String> tags = new ArrayList<>(Arrays.asList(tagsField.getText().split(",")));
-        String pageNumber = pageNumberField.getText();
-        String coverType = coverTypeField.getText();
-
-        Book newBook = new Book(title, subtitle, authors, translators, isbn, publisher, date, edition, cover, language, rating, tags, pageNumber, coverType);
-        books.add(newBook);
-        clearFields();
-        updateBookListView();
-    }
-
-    private void clearFields() {
-        titleField.clear();
-        subtitleField.clear();
-        authorsListView.getItems().clear();
-        translatorsLView.getItems().clear();
-        isbnField.clear();
-        publisherField.clear();
-        dateField.clear();
-        editionField.clear();
-        coverField.clear();
-        languageField.clear();
-        ratingField.clear();
-        tagsField.clear();
-        pageNumberField.clear();
-        coverTypeField.clear();
-    }
-    private void updateBookListView() {
-        bookListView.getItems().setAll(books);
-    }
-
-    @FXML
-    public void onClick(ActionEvent event)
-    {
-        String title = titleField.getText();
-        String subtitle = subtitleField.getText();
-        ArrayList<String> authors = new ArrayList<>(authorsListView.getItems());
-        ArrayList<String> translators = new ArrayList<>(translatorsLView.getItems());
-        String isbn = isbnField.getText();
-        String publisher = publisherField.getText();
-        String date = dateField.getText();
-        String edition = editionField.getText();
-        String cover = coverField.getText();
-        String language = languageField.getText();
-        String rating = ratingField.getText();
-        ArrayList<String> tags = new ArrayList<>(Arrays.asList(tagsField.getText().split(",")));
-        String pageNumber = pageNumberField.getText();
-        String coverType = coverTypeField.getText();
-
-        Book newBook = new Book(title, subtitle, authors, translators, isbn, publisher, date, edition, cover, language, rating, tags, pageNumber, coverType);
-        books.add(newBook);
-        clearFields();
-        updateBookListView();
-    }
-}
+ }

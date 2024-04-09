@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane style="-fx-background-color: #464646;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.MainWindowController">
+<AnchorPane style="-fx-background-color: #464646;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.AddController">
    <children>
-      <VBox alignment="CENTER" layoutX="685.0" layoutY="381.0" AnchorPane.leftAnchor="630.0" AnchorPane.topAnchor="50.0">
+      <VBox alignment="CENTER" layoutX="685.0" layoutY="381.0" AnchorPane.leftAnchor="630.0" AnchorPane.topAnchor="10.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" style="-fx-border-style: solid; -fx-border-width: 3px; -fx-border-radius: 20px; -fx-padding: 15px;" text="ADD PANEL" textAlignment="CENTER" textFill="WHITE">
                <VBox.margin>
@@ -25,7 +25,7 @@
             </Label>
          </children>
       </VBox>
-      <VBox alignment="CENTER_LEFT" layoutX="15.2" layoutY="14.0" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="450.3999999999999" AnchorPane.topAnchor="150.0">
+      <VBox alignment="CENTER_LEFT" layoutX="15.2" layoutY="14.0" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
             <HBox>
                <children>
@@ -37,7 +37,7 @@
                         <Insets top="5.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="titleField" prefHeight="26.0" prefWidth="176.0">
+                  <TextField fx:id="titleField" alignment="BOTTOM_LEFT" prefHeight="26.0" prefWidth="176.0">
                      <HBox.margin>
                         <Insets bottom="5.0" left="85.0" />
                      </HBox.margin>
@@ -69,7 +69,7 @@
                         <Insets top="5.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="subtitleField" prefHeight="26.0" prefWidth="176.0">
+                  <TextField fx:id="subtitleField" alignment="BOTTOM_LEFT" prefHeight="26.0" prefWidth="176.0">
                      <HBox.margin>
                         <Insets left="62.0" />
                      </HBox.margin>
@@ -92,14 +92,38 @@
                         <Insets top="5.0" />
                      </padding>
                   </Label>
-                  <ListView fx:id="authorsListView" prefHeight="26.0" prefWidth="176.0">
+                  <TextField fx:id="authorsField" alignment="BOTTOM_LEFT" prefHeight="26.0" prefWidth="176.0">
                      <HBox.margin>
                         <Insets left="60.0" />
                      </HBox.margin>
-                     <padding>
-                        <Insets bottom="50.0" />
-                     </padding>
+                  </TextField>
+                  <ListView fx:id="authorsListView" prefHeight="150.0" prefWidth="176.0">
+                     <HBox.margin>
+                        <Insets left="-177.0" top="50.0" />
+                     </HBox.margin>
                   </ListView>
+                  <Button fx:id="authorsAddButton" mnemonicParsing="false" onAction="#authorsAddClick" prefHeight="26.0" prefWidth="68.0" style="-fx-background-color: #bcbcbc;" text="Add">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="authorsRemoveButton" layoutX="314.0" layoutY="15.0" mnemonicParsing="false" onAction="#authorsRemoveClick" prefHeight="26.0" prefWidth="68.0" style="-fx-background-color: #bcbcbc;" text="Remove">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                </children>
                <VBox.margin>
                   <Insets bottom="10.0" />
@@ -118,11 +142,37 @@
                         <Insets top="5.0" />
                      </padding>
                   </Label>
-                  <ListView fx:id="translatorsListView" prefHeight="26.0" prefWidth="176.0">
+                  <TextField fx:id="translatorsField" prefHeight="26.0" prefWidth="176.0">
                      <HBox.margin>
                         <Insets left="35.0" />
                      </HBox.margin>
-                  </ListView>
+                  </TextField>
+                  <ListView fx:id="translatorsListView" prefHeight="150.0" prefWidth="176.0">
+                     <HBox.margin>
+                        <Insets left="-177.0" top="50.0" />
+                     </HBox.margin></ListView>
+                  <Button fx:id="translatorsAddButton" mnemonicParsing="false" onAction="#translatorsAddClick" prefHeight="26.0" prefWidth="68.0" style="-fx-background-color: #bcbcbc;" text="Add">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="translatorsRemoveButton" layoutX="312.0" layoutY="15.0" mnemonicParsing="false" onAction="#translatorsRemoveClick" prefHeight="26.0" prefWidth="68.0" style="-fx-background-color: #bcbcbc;" text="Remove">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                </children>
                <VBox.margin>
                   <Insets bottom="10.0" />
@@ -211,7 +261,7 @@
             </HBox>
          </children>
       </VBox>
-      <VBox alignment="CENTER_RIGHT" layoutX="25.0" layoutY="24.0" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="800.0" AnchorPane.topAnchor="150.0">
+      <VBox alignment="CENTER_RIGHT" layoutX="25.0" layoutY="24.0" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="800.0" AnchorPane.topAnchor="100.0">
          <children>
             <HBox>
                <children>
@@ -257,6 +307,17 @@
                         <Insets bottom="10.0" />
                      </padding>
                   </TextField>
+                  <Button fx:id="coverImportButton" mnemonicParsing="false" onAction="#importCoverButton" prefHeight="26.0" prefWidth="68.0" style="-fx-background-color: #bcbcbc;" text="Import">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
                <VBox.margin>
                   <Insets bottom="10.0" />
@@ -327,11 +388,38 @@
                         <Insets top="5.0" />
                      </padding>
                   </Label>
-                  <ListView fx:id="tagsListView" prefHeight="26.0" prefWidth="176.0">
+                  <TextField fx:id="tagsField" prefHeight="26.0" prefWidth="176.0">
                      <HBox.margin>
-                        <Insets left="84.0" />
+                        <Insets left="83.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <ListView fx:id="tagsListView" prefHeight="150.0" prefWidth="176.0">
+                     <HBox.margin>
+                        <Insets left="-177.0" top="50.0" />
                      </HBox.margin>
                   </ListView>
+                  <Button fx:id="tagsAddButton" mnemonicParsing="false" onAction="#tagsAddClick" prefHeight="26.0" prefWidth="68.0" style="-fx-background-color: #bcbcbc;" text="Add">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="tagsRemoveButton" layoutX="316.0" layoutY="15.0" mnemonicParsing="false" onAction="#tagsRemoveClick" prefHeight="26.0" prefWidth="68.0" style="-fx-background-color: #bcbcbc;" text="Remove">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                </children>
                <VBox.margin>
                   <Insets bottom="10.0" />
@@ -394,9 +482,9 @@
             </HBox>
          </children>
       </VBox>
-      <VBox alignment="CENTER" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="650.0">
+      <VBox alignment="CENTER" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="650.0">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #464646; -fx-border-style: solid; -fx-border-width: 3px; -fx-padding: 10px; -fx-border-radius: 20px;" text="ADD" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+            <Button fx:id="addButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #464646; -fx-border-style: solid; -fx-border-width: 3px; -fx-padding: 10px; -fx-border-radius: 20px;" text="ADD" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                <VBox.margin>
                   <Insets />
                </VBox.margin>

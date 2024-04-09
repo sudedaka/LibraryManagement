@@ -49,7 +49,7 @@
             </ToolBar>
             <HBox>
                <children>
-                  <TextField prefHeight="35.0" style="-fx-border-color: #bcbcbc;" HBox.hgrow="ALWAYS">
+                  <TextField prefHeight="35.0" promptText="Search books.." style="-fx-border-color: #bcbcbc;" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
                      </HBox.margin></TextField>
@@ -99,7 +99,7 @@
             </HBox>
             <ToolBar style="-fx-border-style: solid; -fx-background-color: #bcbcbc;" VBox.vgrow="ALWAYS">
                <items>
-                  <Button fx:id="addButton1" alignment="CENTER" mnemonicParsing="false" onAction="#addButtonClick" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #464646;" text="Import" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #464646;" text="Import" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Times New Roman Bold" size="14.0" />
                      </font>
