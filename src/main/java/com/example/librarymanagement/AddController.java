@@ -9,9 +9,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -27,13 +29,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 
 public class AddController {
     @FXML
-    private ArrayList<Book> books;
+    private ArrayList<Book> books = new ArrayList<>(); // Initialize the ArrayList
     @FXML
     private TextField titleField;
     @FXML
@@ -63,9 +64,9 @@ public class AddController {
     @FXML
     private TextField coverTypeField;
     @FXML
-    private ListView<Book> bookListView;
-    @FXML
     private ListView<String> tagsListView;
+
+    private TableView<Book> table;
 
     @FXML
     private ObservableList<String> translatorsList = FXCollections.observableArrayList();
@@ -99,20 +100,24 @@ public class AddController {
     @FXML
     public void importCoverButton()
     {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select JSON File");
-        File file = fileChooser.showOpenDialog(null);
-        if (file != null) {
-            importFromJson(file.getAbsolutePath());
-        }
+
     }
 
     @FXML
-    public void initialize() {
+    public void initialize(TableView<Book> table, ArrayList<Book> books) {
+        this.table = table;
+        this.books = books;
         translatorsListView.setItems(translatorsList);
         authorsListView.setItems(authorsList);
+        tagsListView.setItems(tagsList);
     }
 
+    @FXML
+    private void updateBookTableView() {
+        table.setItems(FXCollections.observableArrayList(books));
+    }
+
+    //Transferring information from TextBoxes to listview
     @FXML
     private void translatorsAddClick(ActionEvent event) throws IOException {
         if (!translatorsField.getText().isEmpty()) {
@@ -136,6 +141,7 @@ public class AddController {
         }
     }
 
+    //deleting selected index in listview elements
     @FXML
     private void authorsRemoveClick(ActionEvent event)
     {
@@ -166,7 +172,9 @@ public class AddController {
         }
     }
 
-    private void addButton(ActionEvent event)
+    //ADD BUTTON CLICKED METHOD: creates a new Book object, adds it to the books list, clears the input fields, and updates the book list view.
+    @FXML
+     private void addButtonClick(ActionEvent event)
     {
         String title = titleField.getText();
         String subtitle = subtitleField.getText();
@@ -179,16 +187,20 @@ public class AddController {
         String cover = coverField.getText();
         String language = languageField.getText();
         String rating = ratingField.getText();
-        ArrayList<String> tags = new ArrayList<>(Arrays.asList(tagsField.getText().split(",")));
+        ArrayList<String> tags = new ArrayList<>(tagsListView.getItems());
         String pageNumber = pageNumberField.getText();
         String coverType = coverTypeField.getText();
 
         Book newBook = new Book(title, subtitle, authors, translators, isbn, publisher, date, edition, cover, language, rating, tags, pageNumber, coverType);
         books.add(newBook);
         clearFields();
-        updateBookListView();
+        updateBookTableView();
+        ((Node) event.getSource()).getScene().getWindow().hide();
+
     }
 
+
+    @FXML
     private void clearFields() { // Text fields will be cleared after added button clicked
         titleField.clear();
         subtitleField.clear();
@@ -202,13 +214,10 @@ public class AddController {
         languageField.clear();
         ratingField.clear();
         tagsField.clear();
+        tagsListView.getItems().clear();
         pageNumberField.clear();
         coverTypeField.clear();
     }
-    private void updateBookListView() {
-        bookListView.getItems().setAll(books);
-    }
-
 
     //THIS CODES:  If the text is blank, it returns null; otherwise, it returns the text.
     public String getTitle()
