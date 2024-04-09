@@ -1,20 +1,20 @@
 package com.example.librarymanagement;
 import java.util.ArrayList;
 public class Book {
-    private final String title;
-    private final String subtitle;
-    private final ArrayList<String> authors;
-    private final ArrayList<String> translators;
-    private final String isbn;
-    private final String publisher;
-    private final String date;
-    private final String edition;
-    private final String cover;
-    private final String language;
-    private final String rating;
-    private final ArrayList<String> tags;
-    private final String numberofPages;
-    private final String coverType;
+    private  String title;
+    private String subtitle;
+    private ArrayList<String> authors;
+    private ArrayList<String> translators;
+    private String isbn;
+    private  String publisher;
+    private  String date;
+    private  String edition;
+    private  String cover;
+    private String language;
+    private String rating;
+    private ArrayList<String> tags;
+    private String numberofPages;
+    private String coverType;
 
     public Book(String title,String subtitle,ArrayList<String>authors,ArrayList<String>translators, String isbn,String publisher,String date, String edition,String cover,String language,String rating,ArrayList<String>tags,String numberofPages,String coverType){
         this.title=title;
@@ -88,4 +88,8 @@ public class Book {
     public ArrayList<String> getAuthors() {
         return authors;
     }
+
+
+
+
 }
