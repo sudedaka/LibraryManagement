@@ -68,11 +68,15 @@ public class MainWindowController extends Application {
 
     @FXML
     private TableView<Book> bookTableView;
-    @FXML
-    private TextField translatorsField;
+
     @FXML
     private ListView<String> translatorsListView;
+
+    private ObservableList<String> authorsList = FXCollections.observableArrayList();
     private ObservableList<String> translatorsList = FXCollections.observableArrayList();
+    private ObservableList<String> tagsList = FXCollections.observableArrayList();
+
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -82,18 +86,16 @@ public class MainWindowController extends Application {
         stage.setMaximized(true);
         stage.setScene(scene);
         MainWindowController controller = fxmlLoader.getController();
-        controller.initialize(books);
+        controller.initialize(books); //AddController from passing the books in MainWindow
+
         stage.show();
-
-
     }
 
     public static void main(String[] args) {
         launch();
     }
 
-
-    @FXML
+    @FXML //In main page when clicked the Add Button, Add Screen will open.
     public void addButtonClick(ActionEvent event) throws IOException
     {
         Stage stage = new Stage();
@@ -103,12 +105,9 @@ public class MainWindowController extends Application {
         stage.setMaximized(true);
         stage.setScene(scene);
         AddController controller = fxmlLoader.getController();
-        controller.initialize(bookTableView,books);
+        controller.initialize(bookTableView,books); //
         stage.showAndWait();
-
     }
-
-
 
     @FXML
     public void importFromJson(String filePath) {   // Method to read data from a JSON file
