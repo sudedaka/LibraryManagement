@@ -72,22 +72,22 @@
             </HBox>
             <HBox alignment="CENTER">
                <children>
-                  <TableView style="-fx-border-style: solid;" HBox.hgrow="ALWAYS">
+                  <TableView fx:id="bookTableView" style="-fx-border-style: solid;" HBox.hgrow="ALWAYS">
                     <columns>
-                      <TableColumn prefWidth="75.0" style="-fx-background-color: #bcbcbc;" text="Title" />
-                      <TableColumn prefWidth="75.0" style="-fx-background-color: #bcbcbc;" text="Subtitle" />
-                        <TableColumn prefWidth="75.0" style="-fx-background-color: #bcbcbc;" text="Authors" />
-                        <TableColumn prefWidth="75.0" style="-fx-background-color: #bcbcbc;" text="Translators" />
-                        <TableColumn prefWidth="75.0" style="-fx-background-color: #bcbcbc;" text="ISBN" />
-                        <TableColumn prefWidth="75.0" style="-fx-background-color: #bcbcbc;" text="Publisher" />
-                        <TableColumn prefWidth="75.0" style="-fx-background-color: #bcbcbc;" text="Date" />
-                        <TableColumn prefWidth="75.0" style="-fx-background-color: #bcbcbc;" text="Edition" />
-                        <TableColumn prefWidth="75.0" style="-fx-background-color: #bcbcbc;" text="Cover" />
-                        <TableColumn prefWidth="75.0" style="-fx-background-color: #bcbcbc;" text="Language" />
-                        <TableColumn prefWidth="75.0" style="-fx-background-color: #bcbcbc;" text="Rating" />
-                        <TableColumn prefWidth="75.0" style="-fx-background-color: #bcbcbc;" text="Tags" />
-                        <TableColumn prefWidth="75.0" style="-fx-background-color: #bcbcbc;" text="Number of Pages" />
-                        <TableColumn prefWidth="75.0" style="-fx-background-color: #bcbcbc;" text="Cover Type" />
+                      <TableColumn fx:id="titleCol" prefWidth="75.0" text="Title" />
+                      <TableColumn fx:id="subtitleCol" prefWidth="75.0" text="Subtitle" />
+                        <TableColumn fx:id="authorsCol" prefWidth="75.0" text="Authors" />
+                        <TableColumn fx:id="translatorsCol" prefWidth="75.0" text="Translators" />
+                        <TableColumn fx:id="isbnCol" prefWidth="75.0" text="ISBN" />
+                        <TableColumn fx:id="publisherCol" prefWidth="75.0" text="Publisher" />
+                        <TableColumn fx:id="dateCol" prefWidth="75.0" text="Date" />
+                        <TableColumn fx:id="editionCol" prefWidth="75.0" text="Edition" />
+                        <TableColumn fx:id="coverCol" prefWidth="75.0" text="Cover" />
+                        <TableColumn fx:id="languageCol" prefWidth="75.0" text="Language" />
+                        <TableColumn fx:id="ratingCol" prefWidth="75.0" text="Rating" />
+                        <TableColumn fx:id="tagsCol" prefWidth="75.0" text="Tags" />
+                        <TableColumn fx:id="numberOfPagesCol" prefWidth="75.0" text="Number of Pages" />
+                        <TableColumn fx:id="coverTypeCol" prefWidth="75.0" text="Cover Type" />
                     </columns>
                      <HBox.margin>
                         <Insets />

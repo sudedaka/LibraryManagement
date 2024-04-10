@@ -17,7 +17,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import com.google.gson.Gson;
-
+import javafx.scene.control.TableView;
 import java.io.*;
 
 
@@ -37,6 +37,28 @@ import javafx.fxml.FXML;
 public class MainWindowController extends Application {
 
     @FXML
+    private TableColumn<Book, String> titleCol;
+    @FXML
+    private TableColumn<Book, String> subtitleCol;
+    @FXML
+    private TableColumn<Book, String> authorsCol;
+    @FXML
+    private TableColumn<Book, String> translatorsCol;
+    @FXML
+    private TableColumn<Book, String> isbnCol;
+    @FXML
+    private TableColumn<Book, String> publisherCol;
+    @FXML
+    private TableColumn<Book, String> dateCol;
+    @FXML
+    private TableColumn<Book, String> editionCol;
+    @FXML
+    private TableColumn<Book, String> coverCol;
+    @FXML
+    private TableColumn<Book, String> languageCol;
+    @FXML
+    private TableColumn<Book, String> ratingCol;
+    @FXML
     private TableView<Book> tableView;
 
     @FXML
@@ -47,12 +69,26 @@ public class MainWindowController extends Application {
     private TableColumn<Book, String> authorColumn;
     //@FXML
     // private ArrayList<Book> books;
+    private TableColumn<Book, String> tagsCol;
     @FXML
-    private TextField translatorsField;
+    private TableColumn<Book, String> numberOfPagesCol;
+    @FXML
+    private TableColumn<Book, String> coverTypeCol;
+    @FXML
+    private ArrayList<Book> books = new ArrayList<>(); // Initialize the ArrayList
+
+    @FXML
+    private TableView<Book> bookTableView;
+
     @FXML
     private ListView<String> translatorsListView;
+
+    private ObservableList<String> authorsList = FXCollections.observableArrayList();
     private ObservableList<String> translatorsList = FXCollections.observableArrayList();
-    private ObservableList<Book> books = FXCollections.observableArrayList();
+    //private ObservableList<Book> books = FXCollections.observableArrayList();
+    private ObservableList<String> tagsList = FXCollections.observableArrayList();
+
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -61,17 +97,17 @@ public class MainWindowController extends Application {
         stage.setTitle("Library Management");
         stage.setMaximized(true);
         stage.setScene(scene);
-        stage.show();
+        MainWindowController controller = fxmlLoader.getController();
+        controller.initialize(books); //AddController from passing the books in MainWindow
 
+        stage.show();
     }
 
     public static void main(String[] args) {
-
-
         launch();
     }
 
-    @FXML
+    @FXML //In main page when clicked the Add Button, Add Screen will open.
     private TextField searchField;
 
     @FXML
@@ -103,12 +139,12 @@ public class MainWindowController extends Application {
         stage.setTitle("Add Screen");
         stage.setMaximized(true);
         stage.setScene(scene);
+        AddController controller = fxmlLoader.getController();
+        controller.initialize(bookTableView,books); //
         stage.showAndWait();
     }
 
-
     @FXML
-
     public void importFromJson(String filePath) {   // Method to read data from a JSON file
         try {
             Gson gson = new Gson();
@@ -126,7 +162,6 @@ public class MainWindowController extends Application {
         }
     }
     @FXML
-
     public void importButton(ActionEvent event) throws IOException
     {
         FileChooser fileChooser = new FileChooser();
@@ -149,12 +184,10 @@ public class MainWindowController extends Application {
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
-
         }
     }
     @FXML
     private void exportButton(ActionEvent event) {
-
         Gson gson = new Gson();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         FileChooser file = new FileChooser();
@@ -166,17 +199,33 @@ public class MainWindowController extends Application {
         exportToJson(f.getAbsolutePath());   // Write data in JSON format to the selected file
     }
 
-
-
-    //COVER IMPORT BUTTON FUNCTION RUNNING
     @FXML
-    public void importCoverButton()
+    public void addBook(String title,String subtitle,ArrayList<String> authors,ArrayList<String> translators,String isbn,String publisher,String date,String edition,String cover,String language,String rating,ArrayList<String> tags,String pageNumber,String coverType)
     {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select JSON File");
-        File file = fileChooser.showOpenDialog(null);
-        if (file != null) {
-            importFromJson(file.getAbsolutePath());
-        }
+        Book newBook = new Book(title, subtitle, authors, translators, isbn, publisher, date, edition, cover, language, rating, tags, pageNumber, coverType);
+        books.add(newBook);
     }
+    @FXML
+    public void initialize(ArrayList<Book> books) //This method, set the columns correctly and populate the TableView with data from your book list.
+    {
+        bookTableView.setItems(FXCollections.observableArrayList(books));
+
+        titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        subtitleCol.setCellValueFactory(new PropertyValueFactory<>("subtitle"));
+        authorsCol.setCellValueFactory(new PropertyValueFactory<>("authors"));
+        translatorsCol.setCellValueFactory(new PropertyValueFactory<>("translators"));
+        isbnCol.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+        publisherCol.setCellValueFactory(new PropertyValueFactory<>("publisher"));
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        editionCol.setCellValueFactory(new PropertyValueFactory<>("edition"));
+        coverCol.setCellValueFactory(new PropertyValueFactory<>("cover"));
+        languageCol.setCellValueFactory(new PropertyValueFactory<>("language"));
+        ratingCol.setCellValueFactory(new PropertyValueFactory<>("rating"));
+        tagsCol.setCellValueFactory(new PropertyValueFactory<>("tags"));
+        numberOfPagesCol.setCellValueFactory(new PropertyValueFactory<>("numberofPages"));
+        coverTypeCol.setCellValueFactory(new PropertyValueFactory<>("coverType"));
+
+
+    }
+
 }
