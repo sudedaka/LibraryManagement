@@ -36,6 +36,7 @@ import javafx.fxml.FXML;
 
 public class MainWindowController extends Application {
 
+
     @FXML
     private TableColumn<Book, String> titleCol;
     @FXML
@@ -228,5 +229,24 @@ public class MainWindowController extends Application {
 
 
     }
+
+    private void updateBookListView() {
+        bookTableView.getItems().setAll(books);
+    }
+    @FXML
+    public void deleteBook() {
+
+        Book selectedBook = bookTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedBook != null) {
+            books.remove(selectedBook);
+            bookTableView.getItems().remove(selectedBook);
+            updateBookListView();
+        } else {
+            System.out.println("Select book to delete");
+        }
+
+    }
+
 
 }
