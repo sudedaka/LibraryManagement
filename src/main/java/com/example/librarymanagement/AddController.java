@@ -25,7 +25,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -68,10 +68,10 @@ public class AddController {
 
     private TableView<Book> table;
 
+    @FXML //This 3 ObservableList codes,represent dynamic data that can be observed for changes.
+    private ObservableList<String> authorsList = FXCollections.observableArrayList();
     @FXML
     private ObservableList<String> translatorsList = FXCollections.observableArrayList();
-    @FXML
-    private ObservableList<String> authorsList = FXCollections.observableArrayList();
     @FXML
     private ObservableList<String> tagsList = FXCollections.observableArrayList();
     @FXML
@@ -79,46 +79,51 @@ public class AddController {
     @FXML
     private TextField authorsField;
 
-    @FXML
-    public void importFromJson(String filePath) {
-        try {
-            Gson gson = new Gson();
-            try (Reader reader = new FileReader(filePath)) {
-                books = gson.fromJson(reader, new TypeToken<ArrayList<Book>>() {
-                }.getType());
-                System.out.println("Books imported from JSON .");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (JsonIOException e) {
-            throw new RuntimeException(e);
-        } catch (JsonSyntaxException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    //COVER IMPORT BUTTON FUNCTION RUNNING
-    @FXML
-    public void importCoverButton()
-    {
 
+
+    @FXML //This method, selects the parts to add and shows the url of the file.
+    public void importCoverButton(ActionEvent event)
+    {
+        FileChooser fc = new FileChooser();
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Image Files","*.png","*.jpg");
+        fc.getExtensionFilters().add(filter);
+        fc.setTitle("Select an cover image");
+        Stage stage = new Stage();
+        File file = fc.showOpenDialog(stage);
+        if (file != null) {
+            coverField.setText(file.getAbsolutePath());
+        }
     }
 
     @FXML
     public void initialize(TableView<Book> table, ArrayList<Book> books) {
         this.table = table;
-        this.books = books;
-        translatorsListView.setItems(translatorsList);
+        this.books = books; //To access the list of books.
+
+        authorsList = FXCollections.observableArrayList();
+        translatorsList = FXCollections.observableArrayList();
+        tagsList = FXCollections.observableArrayList();
+
         authorsListView.setItems(authorsList);
+        translatorsListView.setItems(translatorsList);
         tagsListView.setItems(tagsList);
     }
 
-    @FXML
+    @FXML //It updates the tableView in the MainWindowController
     private void updateBookTableView() {
         table.setItems(FXCollections.observableArrayList(books));
     }
 
-    //Transferring information from TextBoxes to listview
-    @FXML
+
+    @FXML //Transferring data from Authors TextBox to ListView
+    private void authorsAddClick(ActionEvent event) throws IOException {
+        if (!authorsField.getText().isEmpty()) {
+            authorsListView.getItems().add(authorsField.getText());
+            authorsField.clear();
+        }
+    }
+
+    @FXML //Transferring data from Translator TextBox to ListView
     private void translatorsAddClick(ActionEvent event) throws IOException {
         if (!translatorsField.getText().isEmpty()) {
             translatorsListView.getItems().add(translatorsField.getText());
@@ -126,14 +131,7 @@ public class AddController {
         }
     }
 
-    @FXML
-    private void authorsAddClick(ActionEvent event) throws IOException {
-        if (!authorsField.getText().isEmpty()) {
-            authorsListView.getItems().add(authorsField.getText());
-            authorsField.clear();
-        }
-    }
-    @FXML
+    @FXML //Transferring data from Tags TextBox to ListView
     private void tagsAddClick(ActionEvent event) throws IOException {
         if (!tagsField.getText().isEmpty()) {
             tagsListView.getItems().add(tagsField.getText());
@@ -141,8 +139,7 @@ public class AddController {
         }
     }
 
-    //deleting selected index in listview elements
-    @FXML
+    @FXML //For Authors: Deleting the selected index in ListView
     private void authorsRemoveClick(ActionEvent event)
     {
         int index = authorsListView.getSelectionModel().getSelectedIndex();
@@ -152,7 +149,7 @@ public class AddController {
         }
     }
 
-    @FXML
+    @FXML //For Translators: Deleting the selected index in ListView
     private void translatorsRemoveClick(ActionEvent event)
     {
         int index = translatorsListView.getSelectionModel().getSelectedIndex();
@@ -162,7 +159,7 @@ public class AddController {
         }
     }
 
-    @FXML
+    @FXML //For Tags: Deleting the selected index in ListView
     private void tagsRemoveClick(ActionEvent event)
     {
         int index = tagsListView.getSelectionModel().getSelectedIndex();
@@ -172,36 +169,34 @@ public class AddController {
         }
     }
 
-    //ADD BUTTON CLICKED METHOD: creates a new Book object, adds it to the books list, clears the input fields, and updates the book list view.
+    //When on clicked ADD: Creates a new Book object, adds it to the books list,clear fields,updates information.
     @FXML
      private void addButtonClick(ActionEvent event)
     {
-        String title = titleField.getText();
-        String subtitle = subtitleField.getText();
-        ArrayList<String> authors = new ArrayList<>(authorsListView.getItems());
-        ArrayList<String> translators = new ArrayList<>(translatorsListView.getItems());
-        String isbn = isbnField.getText();
-        String publisher = publisherField.getText();
-        String date = dateField.getText();
-        String edition = editionField.getText();
-        String cover = coverField.getText();
-        String language = languageField.getText();
-        String rating = ratingField.getText();
-        ArrayList<String> tags = new ArrayList<>(tagsListView.getItems());
-        String pageNumber = pageNumberField.getText();
-        String coverType = coverTypeField.getText();
+        String title = getTitle();
+        String subtitle = getSubtitle();
+        ArrayList<String> authors =  getAuthors();
+        ArrayList<String> translators = getTranslators();
+        String isbn = getISBN();
+        String publisher = getPublisher();
+        String date = getDate();
+        String edition = getEdition();
+        String cover = getCover();
+        String language = getLanguage();
+        String rating = getRating();
+        ArrayList<String> tags = getTags();
+        String pageNumber = getPageNumber();
+        String coverType = getCoverType();
 
         Book newBook = new Book(title, subtitle, authors, translators, isbn, publisher, date, edition, cover, language, rating, tags, pageNumber, coverType);
         books.add(newBook);
-        clearFields();
-        updateBookTableView();
+        clearFields(); // Clear all the fields.
+        updateBookTableView(); //Updates the TableView information at the MainWindow.
         ((Node) event.getSource()).getScene().getWindow().hide();
-
     }
 
-
-    @FXML
-    private void clearFields() { // Text fields will be cleared after added button clicked
+    @FXML // Text fields will be cleared after added button clicked
+    private void clearFields() {
         titleField.clear();
         subtitleField.clear();
         authorsListView.getItems().clear();
@@ -231,6 +226,22 @@ public class AddController {
         String subtitle = subtitleField.getText();
         if(subtitle.isBlank()) return null;
         return subtitle;
+    }
+    public ArrayList<String> getAuthors() {
+        ArrayList<String> authorsList = new ArrayList<>(authorsListView.getItems());
+        if (authorsList.isEmpty()) {
+            return null;
+        } else {
+            return authorsList;
+        }
+    }
+    public ArrayList<String> getTranslators() {
+        ArrayList<String> translatorList = new ArrayList<>(translatorsListView.getItems());
+        if (translatorList.isEmpty()) {
+            return null;
+        } else {
+            return translatorList;
+        }
     }
 
     public String getISBN()
@@ -274,23 +285,8 @@ public class AddController {
         String rating = ratingField.getText();
         if(rating.isBlank()) return null;
         return rating;
-    }  public ArrayList<String> getAuthors(){
-        ArrayList<String> authorsList = new ArrayList<>(authorsListView.getItems());
-        if (authorsList.isEmpty()) {
-            return null;
-        } else {
-            return authorsList;
-        }
     }
-    public ArrayList<String> getTranslators(){
-        ArrayList<String> translatorList = new ArrayList<>(translatorsListView.getItems());
-        if (translatorList.isEmpty()) {
-            return null;
-        } else {
-            return translatorList;
-        }
-    }
-    public ArrayList<String> getTags(){
+    public ArrayList<String> getTags() {
         ArrayList<String> tagsList = new ArrayList<>(tagsListView.getItems());
         if (tagsList.isEmpty()) {
             return null;
@@ -310,10 +306,4 @@ public class AddController {
         if(coverType.isBlank()) return null;
         return coverType;
     }
-
-
-
-
-
-
 }

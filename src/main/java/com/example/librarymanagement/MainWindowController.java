@@ -35,6 +35,7 @@ import javafx.fxml.FXML;
 
 public class MainWindowController extends Application {
 
+
     @FXML
     private TableColumn<Book, String> titleCol;
     @FXML
@@ -68,11 +69,15 @@ public class MainWindowController extends Application {
 
     @FXML
     private TableView<Book> bookTableView;
-    @FXML
-    private TextField translatorsField;
+
     @FXML
     private ListView<String> translatorsListView;
+
+    private ObservableList<String> authorsList = FXCollections.observableArrayList();
     private ObservableList<String> translatorsList = FXCollections.observableArrayList();
+    private ObservableList<String> tagsList = FXCollections.observableArrayList();
+
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -82,19 +87,18 @@ public class MainWindowController extends Application {
         stage.setMaximized(true);
         stage.setScene(scene);
         MainWindowController controller = fxmlLoader.getController();
-        controller.initialize(books);
+        controller.initialize(books); //AddController from passing the books in MainWindow
+
         stage.show();
-
-
     }
 
     public static void main(String[] args) {
         launch();
     }
 
-
-    @FXML
-    public void addButtonClick(ActionEvent event) throws IOException {
+    @FXML //In main page when clicked the Add Button, Add Screen will open.
+    public void addButtonClick(ActionEvent event) throws IOException
+    {
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(MainWindowController.class.getResource("add.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
@@ -102,10 +106,10 @@ public class MainWindowController extends Application {
         stage.setMaximized(true);
         stage.setScene(scene);
         AddController controller = fxmlLoader.getController();
-        controller.initialize(bookTableView, books);
+        controller.initialize(bookTableView,books); //
         stage.showAndWait();
-
     }
+
 
 
     @FXML
@@ -212,7 +216,27 @@ public class MainWindowController extends Application {
         }
     }
 
+
+
+
+    private void updateBookListView() {
+        bookTableView.getItems().setAll(books);
+    }
+    @FXML
+    public void deleteBook() {
+
+        Book selectedBook = bookTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedBook != null) {
+            books.remove(selectedBook);
+            bookTableView.getItems().remove(selectedBook);
+            updateBookListView();
+        } else {
+            System.out.println("Select book to delete");
+        }
+
     }
 
 
+}
 
