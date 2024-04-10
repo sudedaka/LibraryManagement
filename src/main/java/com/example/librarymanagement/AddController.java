@@ -232,22 +232,7 @@ public class AddController {
         if(subtitle.isBlank()) return null;
         return subtitle;
     }
-    public List<String> getAuthors() {
-        List<String> authorsList = authorsListView.getItems();
-        if (authorsList.isEmpty()) {
-            return null;
-        } else {
-            return authorsList;
-        }
-    }
-    public List<String> getTranslators() {
-        List<String> translatorList = translatorsListView.getItems();
-        if (translatorList.isEmpty()) {
-            return null;
-        } else {
-            return translatorList;
-        }
-    }
+
     public String getISBN()
     {
         String isbn = isbnField.getText();
@@ -289,9 +274,24 @@ public class AddController {
         String rating = ratingField.getText();
         if(rating.isBlank()) return null;
         return rating;
+    }  public ArrayList<String> getAuthors(){
+        ArrayList<String> authorsList = new ArrayList<>(authorsListView.getItems());
+        if (authorsList.isEmpty()) {
+            return null;
+        } else {
+            return authorsList;
+        }
     }
-    public List<String> getTags() {
-        List<String> tagsList = tagsListView.getItems();
+    public ArrayList<String> getTranslators(){
+        ArrayList<String> translatorList = new ArrayList<>(translatorsListView.getItems());
+        if (translatorList.isEmpty()) {
+            return null;
+        } else {
+            return translatorList;
+        }
+    }
+    public ArrayList<String> getTags(){
+        ArrayList<String> tagsList = new ArrayList<>(tagsListView.getItems());
         if (tagsList.isEmpty()) {
             return null;
         } else {

@@ -88,8 +88,58 @@ public class Book {
     public ArrayList<String> getAuthors() {
         return authors;
     }
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
 
+    public void setAuthors(ArrayList<String> authors) {
+        this.authors = authors;
+    }
 
+    public void setTranslators(ArrayList<String> translators) {
+        this.translators = translators;
+    }
 
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
 
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setEdition(String edition) {
+        this.edition = edition;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
+    }
+
+    public void setPageNumber(String numberofPages) {
+        this.numberofPages = numberofPages;
+    }
+
+    public void setCoverType(String coverType) {
+        this.coverType = coverType;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

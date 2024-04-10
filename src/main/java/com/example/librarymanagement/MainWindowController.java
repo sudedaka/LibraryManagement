@@ -94,8 +94,7 @@ public class MainWindowController extends Application {
 
 
     @FXML
-    public void addButtonClick(ActionEvent event) throws IOException
-    {
+    public void addButtonClick(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(MainWindowController.class.getResource("add.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
@@ -103,11 +102,10 @@ public class MainWindowController extends Application {
         stage.setMaximized(true);
         stage.setScene(scene);
         AddController controller = fxmlLoader.getController();
-        controller.initialize(bookTableView,books);
+        controller.initialize(bookTableView, books);
         stage.showAndWait();
 
     }
-
 
 
     @FXML
@@ -128,9 +126,9 @@ public class MainWindowController extends Application {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
-    public void importButton(ActionEvent event) throws IOException
-    {
+    public void importButton(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select JSON File");
         File file = fileChooser.showOpenDialog(null);
@@ -138,6 +136,7 @@ public class MainWindowController extends Application {
             importFromJson(file.getAbsolutePath());  // Read data from the file
         }
     }
+
     @FXML
     public void exportToJson(String path) {
         try {
@@ -153,6 +152,7 @@ public class MainWindowController extends Application {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     private void exportButton(ActionEvent event) {
         Gson gson = new Gson();
@@ -167,11 +167,11 @@ public class MainWindowController extends Application {
     }
 
     @FXML
-    public void addBook(String title,String subtitle,ArrayList<String> authors,ArrayList<String> translators,String isbn,String publisher,String date,String edition,String cover,String language,String rating,ArrayList<String> tags,String pageNumber,String coverType)
-    {
+    public void addBook(String title, String subtitle, ArrayList<String> authors, ArrayList<String> translators, String isbn, String publisher, String date, String edition, String cover, String language, String rating, ArrayList<String> tags, String pageNumber, String coverType) {
         Book newBook = new Book(title, subtitle, authors, translators, isbn, publisher, date, edition, cover, language, rating, tags, pageNumber, coverType);
         books.add(newBook);
     }
+
     @FXML
     public void initialize(ArrayList<Book> books) //This method, set the columns correctly and populate the TableView with data from your book list.
     {
@@ -195,5 +195,24 @@ public class MainWindowController extends Application {
 
     }
 
-}
+    @FXML
+    public void editButtonClick(ActionEvent event) throws IOException {
+        // Get the selected book from the TableView
+        Book selectedBook = bookTableView.getSelectionModel().getSelectedItem();
+        if (selectedBook != null) {
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(MainWindowController.class.getResource("edit.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+            stage.setTitle("Edit Screen");
+            stage.setMaximized(true);
+            stage.setScene(scene);
+            EditController editController = fxmlLoader.getController();
+            editController.initialize(selectedBook,bookTableView,books);
+            stage.show();
+        }
+    }
+
+    }
+
+
 

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane style="-fx-background-color: #464646;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.AddController">
+<AnchorPane style="-fx-background-color: #464646;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.EditController">
     <children>
         <VBox alignment="CENTER" layoutX="685.0" layoutY="381.0" AnchorPane.leftAnchor="630.0" AnchorPane.topAnchor="10.0">
             <children>
@@ -484,7 +484,7 @@
         </VBox>
         <VBox alignment="CENTER" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="650.0">
             <children>
-                <Button fx:id="addButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #464646; -fx-border-style: solid; -fx-border-width: 3px; -fx-padding: 10px; -fx-border-radius: 20px;" text="APPLY" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                <Button fx:id="addButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#editButtonClick" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #464646; -fx-border-style: solid; -fx-border-width: 3px; -fx-padding: 10px; -fx-border-radius: 20px;" text="APPLY" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                     <VBox.margin>
                         <Insets />
                     </VBox.margin>
