@@ -69,6 +69,7 @@ public class MainWindowController extends Application {
     private TableColumn<Book, String> authorColumn;
     //@FXML
     // private ArrayList<Book> books;
+    @FXML
     private TableColumn<Book, String> tagsCol;
     @FXML
     private TableColumn<Book, String> numberOfPagesCol;
