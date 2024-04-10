@@ -11,10 +11,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import com.google.gson.Gson;
@@ -29,6 +28,7 @@ import java.io.Reader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -36,14 +36,23 @@ import javafx.fxml.FXML;
 
 public class MainWindowController extends Application {
 
+    @FXML
+    private TableView<Book> tableView;
 
     @FXML
-    private ArrayList<Book> books;
+    private TableColumn<Book, String> titleColumn;
+
+
+    @FXML
+    private TableColumn<Book, String> authorColumn;
+    //@FXML
+    // private ArrayList<Book> books;
     @FXML
     private TextField translatorsField;
     @FXML
     private ListView<String> translatorsListView;
     private ObservableList<String> translatorsList = FXCollections.observableArrayList();
+    private ObservableList<Book> books = FXCollections.observableArrayList();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -62,6 +71,28 @@ public class MainWindowController extends Application {
         launch();
     }
 
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    private void handleSearch(ActionEvent event) {
+        String searchTerm = searchField.getText();
+        filterByTag(searchTerm); // Call your filter method with the search term
+    }
+    @FXML
+    private void filterByTag(String tag) {
+        ObservableList<Book> filteredBooks = FXCollections.observableArrayList();
+
+        for (Book book : books) {
+            List<String> tags = book.getTags();
+            if (tags.contains(tag)) {
+                filteredBooks.add(book);
+            }
+        }
+
+        // Update the TableView to display filtered books
+        tableView.setItems(filteredBooks);
+    }
 
     @FXML
     public void addButtonClick(ActionEvent event) throws IOException
@@ -149,4 +180,3 @@ public class MainWindowController extends Application {
         }
     }
 }
-
