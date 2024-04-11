@@ -129,6 +129,7 @@ public class MainWindowController extends Application {
         } catch (JsonSyntaxException e) {
             throw new RuntimeException(e);
         }
+        updateBookListView();
     }
 
     @FXML
@@ -162,7 +163,7 @@ public class MainWindowController extends Application {
         Gson gson = new Gson();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         FileChooser file = new FileChooser();
-        file.setInitialFileName("library.json");
+       // file.setInitialFileName("library.json");
         FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter("File", "*.json");
         file.getExtensionFilters().add(fileExtensions);
         file.setTitle("Choose to save!");
