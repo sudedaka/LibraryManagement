@@ -16,7 +16,8 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import com.google.gson.Gson;
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import java.io.File;
 import java.io.FileReader;
@@ -184,6 +185,31 @@ public class AddController {
         ArrayList<String> tags = getTags();
         String pageNumber = getPageNumber();
         String coverType = getCoverType();
+
+        if(pageNumber==null){
+            return;
+        }
+        if(rating==null){
+            return;
+        }
+        if(isbn==null){
+            return;
+        }
+        if(edition==null){
+            return;
+        }
+        if(publisher==null){
+            return;
+        }
+        if(language==null){
+            return;
+        }
+        if(translators==null){
+            return;
+        }
+        if(authors==null){
+            return;
+        }
 
         Book newBook = new Book(title, subtitle, authors, translators, isbn, publisher, date, edition, cover, language, rating, tags, pageNumber, coverType);
         books.add(newBook);
@@ -507,6 +533,5 @@ public class AddController {
         alert.setContentText(message);
 
         alert.showAndWait();
-
     }
 }
