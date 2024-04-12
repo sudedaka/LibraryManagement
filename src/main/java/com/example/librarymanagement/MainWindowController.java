@@ -26,6 +26,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -49,7 +50,7 @@ public class MainWindowController extends Application {
     @FXML
     private TableColumn<Book, String> publisherCol;
     @FXML
-    private TableColumn<Book, String> dateCol;
+    private TableColumn<Book, LocalDate> dateCol;
     @FXML
     private TableColumn<Book, String> editionCol;
     @FXML
@@ -88,7 +89,6 @@ public class MainWindowController extends Application {
         stage.setScene(scene);
         MainWindowController controller = fxmlLoader.getController();
         controller.initialize(books); //AddController from passing the books in MainWindow
-
         stage.show();
     }
 
@@ -129,6 +129,7 @@ public class MainWindowController extends Application {
         } catch (JsonSyntaxException e) {
             throw new RuntimeException(e);
         }
+        updateBookListView();
     }
 
     @FXML
@@ -162,7 +163,7 @@ public class MainWindowController extends Application {
         Gson gson = new Gson();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         FileChooser file = new FileChooser();
-        file.setInitialFileName("library.json");
+       // file.setInitialFileName("library.json");
         FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter("File", "*.json");
         file.getExtensionFilters().add(fileExtensions);
         file.setTitle("Choose to save!");
@@ -195,8 +196,6 @@ public class MainWindowController extends Application {
         tagsCol.setCellValueFactory(new PropertyValueFactory<>("tags"));
         numberOfPagesCol.setCellValueFactory(new PropertyValueFactory<>("numberofPages"));
         coverTypeCol.setCellValueFactory(new PropertyValueFactory<>("coverType"));
-
-
     }
 
     @FXML

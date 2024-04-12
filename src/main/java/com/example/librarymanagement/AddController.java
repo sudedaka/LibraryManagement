@@ -11,10 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -26,6 +23,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -65,6 +63,8 @@ public class AddController {
     private TextField coverTypeField;
     @FXML
     private ListView<String> tagsListView;
+    @FXML
+    private DatePicker datePickerField;
 
     private TableView<Book> table;
 
@@ -203,7 +203,7 @@ public class AddController {
         translatorsListView.getItems().clear();
         isbnField.clear();
         publisherField.clear();
-        dateField.clear();
+        datePickerField.setValue(null);
         editionField.clear();
         coverField.clear();
         languageField.clear();
@@ -258,9 +258,12 @@ public class AddController {
     }
     public String getDate()
     {
-        String date = dateField.getText();
-        if(date.isBlank()) return null;
-        return date;
+        LocalDate selectedDate = datePickerField.getValue();
+        if (selectedDate == null) {
+            return null;
+        } else {
+            return selectedDate.toString(); // You can format the date as needed
+        }
     }
     public String getEdition()
     {

@@ -97,40 +97,41 @@
                   <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
                </VBox.margin>
             </HBox>
-            <ToolBar style="-fx-border-style: solid; -fx-background-color: #bcbcbc;" VBox.vgrow="ALWAYS">
-               <items>
-                  <Button fx:id="importButtonID" alignment="CENTER" mnemonicParsing="false" onAction="#importButton" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #464646;" text="Import" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="Times New Roman Bold" size="14.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button fx:id="exportButtonID" alignment="CENTER" mnemonicParsing="false" onAction="#exportButton" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #464646;" text="Export" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="Times New Roman Bold" size="14.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #464646;" text="Help" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="Times New Roman Bold" size="14.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-               </items>
-               <padding>
-                  <Insets bottom="10.0" left="30.0" right="10.0" top="10.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets top="170.0" />
-               </VBox.margin>
-            </ToolBar>
+            <HBox alignment="BOTTOM_LEFT" VBox.vgrow="ALWAYS">
+               <children>
+                  <ToolBar style="-fx-border-style: solid; -fx-background-color: #bcbcbc;" HBox.hgrow="ALWAYS">
+                     <items>
+                        <Button fx:id="importButtonID" alignment="CENTER" mnemonicParsing="false" onAction="#importButton" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #464646;" text="Import" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Times New Roman Bold" size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="exportButtonID" alignment="CENTER" mnemonicParsing="false" onAction="#exportButton" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #464646;" text="Export" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Times New Roman Bold" size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #464646;" text="Help" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Times New Roman Bold" size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </items>
+                     <padding>
+                        <Insets bottom="10.0" left="30.0" right="10.0" top="10.0" />
+                     </padding>
+                  </ToolBar>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>
