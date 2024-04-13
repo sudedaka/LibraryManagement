@@ -13,6 +13,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -30,6 +32,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.*;
 
 import javafx.fxml.FXML;
 
@@ -60,6 +63,11 @@ public class MainWindowController extends Application {
     @FXML
     private TableColumn<Book, String> ratingCol;
     @FXML
+    private TableView<Book> tableView;
+
+    //@FXML
+    // private ArrayList<Book> books;
+    @FXML
     private TableColumn<Book, String> tagsCol;
     @FXML
     private TableColumn<Book, String> numberOfPagesCol;
@@ -79,6 +87,10 @@ public class MainWindowController extends Application {
     private ObservableList<String> tagsList = FXCollections.observableArrayList();
 
 
+    @FXML
+    private TextField searchField;
+    @FXML
+    private Button searchButton;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -89,6 +101,7 @@ public class MainWindowController extends Application {
         stage.setScene(scene);
         MainWindowController controller = fxmlLoader.getController();
         controller.initialize(books); //AddController from passing the books in MainWindow
+
         stage.show();
     }
 
@@ -96,7 +109,60 @@ public class MainWindowController extends Application {
         launch();
     }
 
-    @FXML //In main page when clicked the Add Button, Add Screen will open.
+
+    public ArrayList<Book> filterByTags() {
+        String searchQuery = searchField.getText().toLowerCase();
+        String[] tagsToSearch = searchQuery.split("\\s+"); // Split search query by spaces
+        ArrayList<Book> filteredBooks = new ArrayList<>();
+
+        for (Book book : bookTableView.getItems()) {
+            boolean allTagsFound = true;
+            for (String tag : tagsToSearch) {
+                boolean tagFound = false;
+                for (String bookTag : book.getTags()) {
+                    if (bookTag.toLowerCase().contains(tag)) {
+                        tagFound = true;
+                        break;
+                    }
+                }
+                if (!tagFound) {
+                    allTagsFound = false;
+                    break;
+                }
+            }
+            if (allTagsFound) {
+                filteredBooks.add(book);
+            }
+        }
+
+        return filteredBooks;
+    }
+    public void show() {
+        ArrayList<Book> showSearchResults = filterByTags();
+
+        // Clear the current items in the TableView
+        bookTableView.getItems().clear();
+
+        // Add the filtered results to the TableView
+        bookTableView.getItems().addAll(showSearchResults);
+    }
+    @FXML
+    public void handleSearch(ActionEvent event) {
+        // Call the show() method to update the TableView with the filtered results
+        show();
+    }
+
+    @FXML
+    public void refreshTableView(ActionEvent event) {
+        // Clear the current items in the TableView
+        bookTableView.getItems().clear();
+
+        // Add all the books back to the TableView
+        bookTableView.getItems().addAll(books);
+    }
+
+
+    @FXML
     public void addButtonClick(ActionEvent event) throws IOException
     {
         Stage stage = new Stage();
@@ -110,10 +176,7 @@ public class MainWindowController extends Application {
         stage.showAndWait();
     }
 
-
-
     @FXML
-
     public void importFromJson(String filePath) {   // Method to read data from a JSON file
         try {
             Gson gson = new Gson();
@@ -163,7 +226,7 @@ public class MainWindowController extends Application {
         Gson gson = new Gson();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         FileChooser file = new FileChooser();
-       // file.setInitialFileName("library.json");
+        file.setInitialFileName("library.json");
         FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter("File", "*.json");
         file.getExtensionFilters().add(fileExtensions);
         file.setTitle("Choose to save!");
@@ -214,9 +277,6 @@ public class MainWindowController extends Application {
             stage.show();
         }
     }
-
-
-
 
     private void updateBookListView() {
         bookTableView.getItems().setAll(books);
