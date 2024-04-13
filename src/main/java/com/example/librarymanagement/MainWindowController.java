@@ -88,14 +88,23 @@ public class MainWindowController extends Application {
         stage.setMaximized(true);
         stage.setScene(scene);
         MainWindowController controller = fxmlLoader.getController();
-       // importFromJson("path/to/library.json");
-        controller.initialize(books); //AddController from passing the books in MainWindow
-
+        controller.initialize(books);
+        controller.loadBooksFromFile();
         stage.show();
     }
 
     public static void main(String[] args) {
         launch();
+    }
+    private void loadBooksFromFile() {  // Method to load books from a JSON file.
+        String folderPath = "Books";
+        String jsonFilePath = folderPath + File.separator + "library.json";
+        File jsonFile = new File(jsonFilePath);
+        if (jsonFile.exists()) {
+            importFromJson(jsonFilePath);
+        } else {
+            updateBookListView();
+        }
     }
 
     @FXML //In main page when clicked the Add Button, Add Screen will open.
@@ -110,6 +119,7 @@ public class MainWindowController extends Application {
         AddController controller = fxmlLoader.getController();
         controller.initialize(bookTableView,books); //
         stage.showAndWait();
+        exportToJson("library.json");
     }
 
 
@@ -132,7 +142,6 @@ public class MainWindowController extends Application {
         } catch (JsonSyntaxException e) {
             throw new RuntimeException(e);
         }
-        updateBookListView();
     }
 
     @FXML
@@ -158,13 +167,6 @@ public class MainWindowController extends Application {
         String filePath = folderPath + File.separator + baseFileName + ".json";
         File file = new File(filePath);
 
-        int count = 1;
-        while (file.exists()) {
-            String uniqueFileName = baseFileName + "-" + count;
-            filePath = folderPath + File.separator + uniqueFileName + ".json";
-            file = new File(filePath);
-            count++;
-        }
 
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -280,7 +282,7 @@ public class MainWindowController extends Application {
 
             gson = new Gson();
             try (Writer writer = new FileWriter(userPath)) {
-                gson.toJson(books, writer); // Write the updated books list to the JSON file
+                gson.toJson(books, writer);
             } catch (IOException e) {
                 e.printStackTrace();
             }

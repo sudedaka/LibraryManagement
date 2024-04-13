@@ -193,6 +193,7 @@ public class AddController {
         clearFields(); // Clear all the fields.
         updateBookTableView(); //Updates the TableView information at the MainWindow.
         ((Node) event.getSource()).getScene().getWindow().hide();
+
     }
 
     @FXML // Text fields will be cleared after added button clicked
