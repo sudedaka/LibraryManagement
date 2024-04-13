@@ -13,6 +13,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -26,10 +28,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javafx.fxml.FXML;
 
@@ -62,12 +61,6 @@ public class MainWindowController extends Application {
     @FXML
     private TableView<Book> tableView;
 
-    @FXML
-    private TableColumn<Book, String> titleColumn;
-
-
-    @FXML
-    private TableColumn<Book, String> authorColumn;
     //@FXML
     // private ArrayList<Book> books;
     @FXML
@@ -91,6 +84,10 @@ public class MainWindowController extends Application {
     private ObservableList<String> tagsList = FXCollections.observableArrayList();
 
 
+    @FXML
+    private TextField searchField;
+    @FXML
+    private Button searchButton;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -109,28 +106,58 @@ public class MainWindowController extends Application {
         launch();
     }
 
-    @FXML //In main page when clicked the Add Button, Add Screen will open.
-    private TextField searchField;
 
-    @FXML
-    private void handleSearch(ActionEvent event) {
-        String searchTerm = searchField.getText();
-        filterByTag(searchTerm); // Call your filter method with the search term
-    }
-    @FXML
-    private void filterByTag(String tag) {
-        ObservableList<Book> filteredBooks = FXCollections.observableArrayList();
+    public ArrayList<Book> filterByTags() {
+        String searchQuery = searchField.getText().toLowerCase();
+        String[] tagsToSearch = searchQuery.split("\\s+"); // Split search query by spaces
+        ArrayList<Book> filteredBooks = new ArrayList<>();
 
-        for (Book book : books) {
-            List<String> tags = book.getTags();
-            if (tags.contains(tag)) {
+        for (Book book : bookTableView.getItems()) {
+            boolean allTagsFound = true;
+            for (String tag : tagsToSearch) {
+                boolean tagFound = false;
+                for (String bookTag : book.getTags()) {
+                    if (bookTag.toLowerCase().contains(tag)) {
+                        tagFound = true;
+                        break;
+                    }
+                }
+                if (!tagFound) {
+                    allTagsFound = false;
+                    break;
+                }
+            }
+            if (allTagsFound) {
                 filteredBooks.add(book);
             }
         }
 
-        // Update the TableView to display filtered books
-        tableView.setItems(filteredBooks);
+        return filteredBooks;
     }
+    public void show() {
+        ArrayList<Book> showSearchResults = filterByTags();
+
+        // Clear the current items in the TableView
+        bookTableView.getItems().clear();
+
+        // Add the filtered results to the TableView
+        bookTableView.getItems().addAll(showSearchResults);
+    }
+    @FXML
+    public void handleSearch(ActionEvent event) {
+        // Call the show() method to update the TableView with the filtered results
+        show();
+    }
+
+    @FXML
+    public void refreshTableView(ActionEvent event) {
+        // Clear the current items in the TableView
+        bookTableView.getItems().clear();
+
+        // Add all the books back to the TableView
+        bookTableView.getItems().addAll(books);
+    }
+
 
     @FXML
     public void addButtonClick(ActionEvent event) throws IOException
@@ -247,6 +274,4 @@ public class MainWindowController extends Application {
         }
 
     }
-
-
 }
