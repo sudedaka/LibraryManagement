@@ -292,7 +292,6 @@ public class AddController {
             return publisher;
         }
     }
-
     public String getEdition()
     {
         String edition= editionField.getText();
