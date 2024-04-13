@@ -1,5 +1,6 @@
 package com.example.librarymanagement;
 
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -87,6 +88,7 @@ public class MainWindowController extends Application {
         stage.setMaximized(true);
         stage.setScene(scene);
         MainWindowController controller = fxmlLoader.getController();
+       // importFromJson("path/to/library.json");
         controller.initialize(books); //AddController from passing the books in MainWindow
 
         stage.show();
@@ -120,6 +122,7 @@ public class MainWindowController extends Application {
             try (Reader reader = new FileReader(filePath)) {
                 books = gson.fromJson(reader, new TypeToken<ArrayList<Book>>() {
                 }.getType());  // Add data read from JSON file to the books list
+                updateBookListView();
                 System.out.println("Books imported from JSON .");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -144,11 +147,39 @@ public class MainWindowController extends Application {
 
     @FXML
     public void exportToJson(String path) {
-        try {
+        initialize(books);
+        String folderPath = "Books";
+        File folder = new File(folderPath);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        String baseFileName = "library";
+        String filePath = folderPath + File.separator + baseFileName + ".json";
+        File file = new File(filePath);
+
+        int count = 1;
+        while (file.exists()) {
+            String uniqueFileName = baseFileName + "-" + count;
+            filePath = folderPath + File.separator + uniqueFileName + ".json";
+            file = new File(filePath);
+            count++;
+        }
+
+        try (FileWriter fileWriter = new FileWriter(filePath)) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String jsonString = gson.toJson(books);
+            fileWriter.write(jsonString);
+            System.out.println("JSON is created");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+       try {
             Gson gson = new Gson();
             String jsonFormat = gson.toJson(books);
 
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
+           try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
                 writer.write(jsonFormat);
             } catch (IOException e) {
                 System.err.println("An error occurred while writing to the file: " + e.getMessage());
@@ -157,18 +188,20 @@ public class MainWindowController extends Application {
             throw new RuntimeException(e);
         }
     }
+    private String userPath;
 
     @FXML
     private void exportButton(ActionEvent event) {
         Gson gson = new Gson();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         FileChooser file = new FileChooser();
-       // file.setInitialFileName("library.json");
+        file.setInitialFileName("library.json");
         FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter("File", "*.json");
         file.getExtensionFilters().add(fileExtensions);
         file.setTitle("Choose to save!");
         File f = file.showSaveDialog(stage);
         exportToJson(f.getAbsolutePath());   // Write data in JSON format to the selected file
+        userPath=f.getAbsolutePath();
     }
 
     @FXML
@@ -180,6 +213,7 @@ public class MainWindowController extends Application {
     @FXML
     public void initialize(ArrayList<Book> books) //This method, set the columns correctly and populate the TableView with data from your book list.
     {
+
         bookTableView.setItems(FXCollections.observableArrayList(books));
 
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -221,6 +255,7 @@ public class MainWindowController extends Application {
 
 
     private void updateBookListView() {
+
         bookTableView.getItems().setAll(books);
     }
     @FXML
@@ -232,8 +267,25 @@ public class MainWindowController extends Application {
             books.remove(selectedBook);
             bookTableView.getItems().remove(selectedBook);
             updateBookListView();
-        } else {
-            System.out.println("Select book to delete");
+
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String folderPath = "Books";
+            String filePath = folderPath + File.separator + "library.json";
+            try (Writer writer = new FileWriter(filePath)) {
+                gson.toJson(books, writer);
+                System.out.println("Selected book is deleted from JSON file.");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            gson = new Gson();
+            try (Writer writer = new FileWriter(userPath)) {
+                gson.toJson(books, writer); // Write the updated books list to the JSON file
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
         }
 
     }
