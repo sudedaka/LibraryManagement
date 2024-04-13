@@ -16,7 +16,8 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import com.google.gson.Gson;
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import java.io.File;
 import java.io.FileReader;
@@ -188,6 +189,31 @@ public class AddController {
         String pageNumber = getPageNumber();
         String coverType = getCoverType();
 
+        if(pageNumber==null){
+            return;
+        }
+        if(rating==null){
+            return;
+        }
+        if(isbn==null){
+            return;
+        }
+        if(edition==null){
+            return;
+        }
+        if(publisher==null){
+            return;
+        }
+        if(language==null){
+            return;
+        }
+        if(translators==null){
+            return;
+        }
+        if(authors==null){
+            return;
+        }
+
         Book newBook = new Book(title, subtitle, authors, translators, isbn, publisher, date, edition, cover, language, rating, tags, pageNumber, coverType);
         books.add(newBook);
         clearFields(); // Clear all the fields.
@@ -215,46 +241,70 @@ public class AddController {
     }
 
     //THIS CODES:  If the text is blank, it returns null; otherwise, it returns the text.
-    public String getTitle()
-    {
+    public String getTitle() {
+
         String title = titleField.getText();
-        if(title.isBlank()) return null;
-        return title;
+
+        return title != null? title : "";
+
     }
+
     public String getSubtitle()
+
     {
+
         String subtitle = subtitleField.getText();
-        if(subtitle.isBlank()) return null;
-        return subtitle;
-    }
-    public ArrayList<String> getAuthors() {
-        ArrayList<String> authorsList = new ArrayList<>(authorsListView.getItems());
-        if (authorsList.isEmpty()) {
-            return null;
-        } else {
-            return authorsList;
-        }
-    }
-    public ArrayList<String> getTranslators() {
-        ArrayList<String> translatorList = new ArrayList<>(translatorsListView.getItems());
-        if (translatorList.isEmpty()) {
-            return null;
-        } else {
-            return translatorList;
-        }
+
+        return subtitle != null ? subtitle : "";
+
     }
 
     public String getISBN()
-    {
-        String isbn = isbnField.getText();
-        if(isbn.isBlank()) return null;
-        return isbn;
+
+    {    String isbn=isbnField.getText();
+
+        if (isbn==null||isbn.isBlank()) {
+
+            return "";}
+
+        else if  (isbn.matches("\\d{13}")) {
+
+            return isbn;
+
+        } else {
+
+            // If not numeric, show error message
+
+            showErrorAlert("ISBN must be a 13-digit number.");
+
+            return null;
+
+        }
+
     }
+
     public String getPublisher()
+
     {
+
         String publisher =  publisherField.getText();
-        if(publisher.isBlank()) return null;
-        return publisher;
+
+        if (publisher == null || publisher.isEmpty()) {
+
+            return "";
+
+        } else if (publisher.matches(".*\\d+.*")) {
+
+            showErrorAlert("Publisher cannot contain numeric characters.");
+
+            return null; // Show error message for publisher containing numeric characters
+
+        } else {
+
+            return publisher;
+
+        }
+
     }
     public String getDate()
     {
@@ -268,28 +318,146 @@ public class AddController {
     public String getEdition()
     {
         String edition= editionField.getText();
-        if(edition.isBlank()) return null;
-        return edition;
+
+        if (edition==null||edition.isBlank()) {
+
+            return "";}
+
+        else if  (edition.matches("\\d+")) {
+
+            return edition;
+
+        } else {
+
+            // If not numeric, show error message
+
+            showErrorAlert("Edition must be numeric.");
+
+            return null;
+
+        }
+
     }
     public String getCover()
     {
         String cover = coverField.getText();
-        if(cover.isBlank()) return null;
-        return cover;
+
+        return cover != null ? cover : "";
+
     }
     public String getLanguage()
     {
         String language = languageField.getText();
-        if(language.isBlank()) return null;
-        return language;
+
+        if (language == null || language.isEmpty()) {
+
+            return ""; // Return empty string for null or empty title
+
+        } else if (language.matches(".*\\d+.*")) {
+
+            showErrorAlert("Language cannot contain numeric characters.");
+
+            return null; // Show error message for titles containing numeric characters
+
+        } else {
+
+            return language;
+
+        }
+
     }
     public String getRating()
     {
         String rating = ratingField.getText();
-        if(rating.isBlank()) return null;
-        return rating;
+
+        if (rating == null||rating.isBlank()) {
+
+            return "";}
+
+        else if (rating.matches("\\d+")) {
+
+            return rating; // If input is integer
+
+        } else if (rating.matches("\\d+\\.\\d+")) {
+
+            return rating; // If input is double
+
+        }
+
+        else{
+
+            showErrorAlert("Rating must be numeric.");
+
+            return null;
+
+        }
+
     }
-    public ArrayList<String> getTags() {
+
+    public ArrayList<String> getAuthors() {
+
+        ArrayList<String> authorList = new ArrayList<>(authorsListView.getItems());
+
+        if (authorList.isEmpty()) {
+
+            return null; //
+
+        } else {
+
+            for (String author : authorList) {
+
+                if (author.matches(".*\\d+.*")) {
+
+                    showErrorAlert("Author names cannot contain numeric characters.");
+
+                    return null; // Show error message and return null if any author name contains numeric characters
+
+                }
+
+            }
+
+            return authorList;
+
+        }
+
+    }
+
+
+
+    public ArrayList<String> getTranslators() {
+
+        ArrayList<String> translatorList = new ArrayList<>(translatorsListView.getItems());
+
+        if (translatorList.isEmpty()) {
+
+            return null;
+
+        } else {
+
+            for (String translator : translatorList) {
+
+                if (translator.matches(".*\\d+.*")) {
+
+                    showErrorAlert("Translator names cannot contain numeric characters.");
+
+                    return null; // Show error message and return null if any translator name contains numeric characters
+
+                }
+
+            }
+
+            return translatorList; // Return the list if all translator names are valid
+
+        }
+
+    }
+
+
+
+
+
+    public ArrayList<String> getTags(){
+
         ArrayList<String> tagsList = new ArrayList<>(tagsListView.getItems());
         if (tagsList.isEmpty()) {
             return null;
@@ -300,13 +468,44 @@ public class AddController {
     public String getPageNumber()
     {
         String pageNumber = pageNumberField.getText();
-        if(pageNumber.isBlank()) return null;
-        return pageNumber;
+
+        if (pageNumber==null||pageNumber.isBlank()) {
+
+            return "";}
+
+        else if  (pageNumber.matches("\\d+")) {
+
+            return pageNumber;
+
+        } else {
+
+            // If not numeric, show error message
+
+            showErrorAlert("Page Number must be numeric.");
+
+            return null;
+
+        }
+
     }
     public String getCoverType()
     {
         String coverType = coverTypeField.getText();
-        if(coverType.isBlank()) return null;
-        return coverType;
+
+        return coverType != null ? coverType: "";
+
+    }
+
+    private void showErrorAlert(String message) {
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+
+        alert.setTitle("Input Error");
+
+        alert.setHeaderText(null);
+
+        alert.setContentText(message);
+
+        alert.showAndWait();
     }
 }
