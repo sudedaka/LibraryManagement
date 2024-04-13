@@ -172,11 +172,10 @@ public class AddController {
 
     //When on clicked ADD: Creates a new Book object, adds it to the books list,clear fields,updates information.
     @FXML
-     private void addButtonClick(ActionEvent event)
-    {
+     private void addButtonClick(ActionEvent event) {
         String title = getTitle();
         String subtitle = getSubtitle();
-        ArrayList<String> authors =  getAuthors();
+        ArrayList<String> authors = getAuthors();
         ArrayList<String> translators = getTranslators();
         String isbn = getISBN();
         String publisher = getPublisher();
@@ -189,38 +188,57 @@ public class AddController {
         String pageNumber = getPageNumber();
         String coverType = getCoverType();
 
-        if(pageNumber==null){
+        if (pageNumber == null) {
             return;
         }
-        if(rating==null){
+        if (rating == null) {
             return;
         }
-        if(isbn==null){
+        if (isbn == null) {
             return;
         }
-        if(edition==null){
+        if (edition == null) {
             return;
         }
-        if(publisher==null){
+        if (publisher == null) {
             return;
         }
-        if(language==null){
+        if (language == null) {
             return;
         }
-        if(translators==null){
+        if (translators == null) {
             return;
         }
-        if(authors==null){
+        if (authors == null) {
             return;
-        }
+        } else if ((title == null || title.isBlank()) &&
+                (subtitle == null || subtitle.isBlank()) &&
+                (authors == null || authors.isEmpty()) &&
+                (translators == null || translators.isEmpty()) &&
+                (isbn == null || isbn.isBlank()) &&
+                (publisher == null || publisher.isBlank()) &&
+                (date == null || date.isBlank()) &&
+                (edition == null || edition.isBlank()) &&
+                (cover == null || cover.isBlank()) &&
+                (language == null || language.isBlank()) &&
+                (rating == null || rating.isBlank()) &&
+                (tags == null || tags.isEmpty()) &&
+                (pageNumber == null || pageNumber.isBlank()) &&
+                (coverType == null || coverType.isBlank())) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning!");
+                alert.setHeaderText("No Information Entered!");
+                alert.setContentText("Please enter information before adding the book!");
+                alert.showAndWait();
 
-        Book newBook = new Book(title, subtitle, authors, translators, isbn, publisher, date, edition, cover, language, rating, tags, pageNumber, coverType);
-        books.add(newBook);
-        clearFields(); // Clear all the fields.
-        updateBookTableView(); //Updates the TableView information at the MainWindow.
-        ((Node) event.getSource()).getScene().getWindow().hide();
+        } else {
+            Book newBook = new Book(title, subtitle, authors, translators, isbn, publisher, date, edition, cover, language, rating, tags, pageNumber, coverType);
+            books.add(newBook);
+            clearFields(); // Clear all the fields.
+            updateBookTableView(); //Updates the TableView information at the MainWindow.
+            ((Node) event.getSource()).getScene().getWindow().hide();
+        }
     }
-
     @FXML // Text fields will be cleared after added button clicked
     private void clearFields() {
         titleField.clear();
@@ -328,8 +346,9 @@ public class AddController {
                 return null; // Show error message and return null if any author name contains numeric characters
             }
         }
-        return authorList; // Her durumda listeyi döndür
-    }
+        return authorList;
+        }
+
     public ArrayList<String> getTranslators() {
         ArrayList<String> translatorList = new ArrayList<>(translatorsListView.getItems());
         for (String translator : translatorList) {
@@ -376,15 +395,10 @@ public class AddController {
         return coverType != null ? coverType: "";
     }
     private void showErrorAlert(String message) {
-
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-
+        Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Input Error");
-
         alert.setHeaderText(null);
-
         alert.setContentText(message);
-
         alert.showAndWait();
     }
 }

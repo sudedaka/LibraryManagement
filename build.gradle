@@ -26,7 +26,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'com.example.librarymanagement'
-    mainClass = 'com.example.librarymanagement.HelloApplication'
+    mainClass = 'com.example.librarymanagement.MainWindowController'
 }
 
 javafx {
