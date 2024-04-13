@@ -240,224 +240,108 @@ public class AddController {
         coverTypeField.clear();
     }
 
-    //THIS CODES:  If the text is blank, it returns null; otherwise, it returns the text.
     public String getTitle() {
-
         String title = titleField.getText();
-
         return title != null? title : "";
-
     }
-
     public String getSubtitle()
-
     {
-
         String subtitle = subtitleField.getText();
-
         return subtitle != null ? subtitle : "";
-
     }
 
     public String getISBN()
-
     {    String isbn=isbnField.getText();
-
         if (isbn==null||isbn.isBlank()) {
-
             return "";}
-
         else if  (isbn.matches("\\d{13}")) {
-
             return isbn;
-
         } else {
-
             // If not numeric, show error message
-
             showErrorAlert("ISBN must be a 13-digit number.");
-
             return null;
-
         }
-
     }
-
     public String getPublisher()
-
     {
-
         String publisher =  publisherField.getText();
-
         if (publisher == null || publisher.isEmpty()) {
-
             return "";
-
-        } else if (publisher.matches(".*\\d+.*")) {
-
+        } else if (publisher.matches(".\\d+.")) {
             showErrorAlert("Publisher cannot contain numeric characters.");
-
             return null; // Show error message for publisher containing numeric characters
-
         } else {
-
             return publisher;
-
-        }
-
-    }
-    public String getDate()
-    {
-        LocalDate selectedDate = datePickerField.getValue();
-        if (selectedDate == null) {
-            return null;
-        } else {
-            return selectedDate.toString(); // You can format the date as needed
         }
     }
+
     public String getEdition()
     {
         String edition= editionField.getText();
-
         if (edition==null||edition.isBlank()) {
-
             return "";}
-
         else if  (edition.matches("\\d+")) {
-
             return edition;
-
         } else {
-
             // If not numeric, show error message
-
             showErrorAlert("Edition must be numeric.");
-
             return null;
-
         }
-
     }
     public String getCover()
     {
         String cover = coverField.getText();
-
         return cover != null ? cover : "";
-
     }
     public String getLanguage()
     {
         String language = languageField.getText();
-
         if (language == null || language.isEmpty()) {
-
             return ""; // Return empty string for null or empty title
-
-        } else if (language.matches(".*\\d+.*")) {
-
-            showErrorAlert("Language cannot contain numeric characters.");
-
+        } else if (language.matches(".\\d+.")) {
+            showErrorAlert("Title cannot contain numeric characters.");
             return null; // Show error message for titles containing numeric characters
-
         } else {
-
             return language;
-
         }
-
     }
     public String getRating()
     {
         String rating = ratingField.getText();
-
         if (rating == null||rating.isBlank()) {
-
             return "";}
-
         else if (rating.matches("\\d+")) {
-
             return rating; // If input is integer
-
         } else if (rating.matches("\\d+\\.\\d+")) {
-
             return rating; // If input is double
-
         }
-
         else{
-
             showErrorAlert("Rating must be numeric.");
-
             return null;
-
         }
-
     }
-
     public ArrayList<String> getAuthors() {
-
         ArrayList<String> authorList = new ArrayList<>(authorsListView.getItems());
-
-        if (authorList.isEmpty()) {
-
-            return null; //
-
-        } else {
-
-            for (String author : authorList) {
-
-                if (author.matches(".*\\d+.*")) {
-
-                    showErrorAlert("Author names cannot contain numeric characters.");
-
-                    return null; // Show error message and return null if any author name contains numeric characters
-
-                }
-
+        for (String author : authorList) {
+            if (author.matches(".*\\d+.*")) {
+                showErrorAlert("Author names cannot contain numeric characters.");
+                return null; // Show error message and return null if any author name contains numeric characters
             }
-
-            return authorList;
-
         }
-
+        return authorList; // Her durumda listeyi döndür
     }
-
-
-
     public ArrayList<String> getTranslators() {
-
         ArrayList<String> translatorList = new ArrayList<>(translatorsListView.getItems());
-
-        if (translatorList.isEmpty()) {
-
-            return null;
-
-        } else {
-
-            for (String translator : translatorList) {
-
-                if (translator.matches(".*\\d+.*")) {
-
-                    showErrorAlert("Translator names cannot contain numeric characters.");
-
-                    return null; // Show error message and return null if any translator name contains numeric characters
-
-                }
-
+        for (String translator : translatorList) {
+            if (translator.matches(".*\\d+.*")) {
+                showErrorAlert("Translator names cannot contain numeric characters.");
+                return null; // Show error message and return null if any translator name contains numeric characters
             }
-
-            return translatorList; // Return the list if all translator names are valid
-
         }
-
+        return translatorList; // Return the list if all translator names are valid
     }
-
-
-
-
 
     public ArrayList<String> getTags(){
-
         ArrayList<String> tagsList = new ArrayList<>(tagsListView.getItems());
         if (tagsList.isEmpty()) {
             return null;
@@ -465,37 +349,32 @@ public class AddController {
             return tagsList;
         }
     }
+    public String getDate() {
+        LocalDate selectedDate = datePickerField.getValue();
+        if (selectedDate == null) {
+            return null;
+        } else {
+            return selectedDate.toString(); // You can format the date as needed
+        }
+    }
     public String getPageNumber()
     {
         String pageNumber = pageNumberField.getText();
-
         if (pageNumber==null||pageNumber.isBlank()) {
-
             return "";}
-
         else if  (pageNumber.matches("\\d+")) {
-
             return pageNumber;
-
         } else {
-
             // If not numeric, show error message
-
             showErrorAlert("Page Number must be numeric.");
-
             return null;
-
         }
-
     }
     public String getCoverType()
     {
         String coverType = coverTypeField.getText();
-
         return coverType != null ? coverType: "";
-
     }
-
     private void showErrorAlert(String message) {
 
         Alert alert = new Alert(Alert.AlertType.ERROR);
