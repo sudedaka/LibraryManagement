@@ -109,34 +109,45 @@ public class MainWindowController extends Application {
         launch();
     }
 
-
     public ArrayList<Book> filterByTags() {
         String searchQuery = searchField.getText().toLowerCase();
         String[] tagsToSearch = searchQuery.split("\\s+"); // Split search query by spaces
         ArrayList<Book> filteredBooks = new ArrayList<>();
 
+        if (searchQuery.isEmpty()) {
+            return new ArrayList<>(books); // Return all books if search query is empty
+        }
+
         for (Book book : bookTableView.getItems()) {
-            boolean allTagsFound = true;
-            for (String tag : tagsToSearch) {
-                boolean tagFound = false;
-                for (String bookTag : book.getTags()) {
-                    if (bookTag.toLowerCase().contains(tag)) {
-                        tagFound = true;
+            if (book.getTags() == null || book.getTags().isEmpty()) {
+                if (searchQuery.isEmpty()) {
+                    filteredBooks.add(book); // If the book has no tags and the search query is empty, include it
+                }
+            } else {
+                boolean allTagsFound = true;
+                for (String tag : tagsToSearch) {
+                    boolean tagFound = false;
+                    for (String bookTag : book.getTags()) {
+                        if (bookTag.toLowerCase().contains(tag)) {
+                            tagFound = true;
+                            break;
+                        }
+                    }
+                    if (!tagFound) {
+                        allTagsFound = false;
                         break;
                     }
                 }
-                if (!tagFound) {
-                    allTagsFound = false;
-                    break;
+                if (allTagsFound) {
+                    filteredBooks.add(book);
                 }
-            }
-            if (allTagsFound) {
-                filteredBooks.add(book);
             }
         }
 
         return filteredBooks;
     }
+
+
     public void show() {
         ArrayList<Book> showSearchResults = filterByTags();
 
