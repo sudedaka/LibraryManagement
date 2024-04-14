@@ -101,24 +101,16 @@ public class MainWindowController extends Application {
         stage.setMaximized(true);
         stage.setScene(scene);
         MainWindowController controller = fxmlLoader.getController();
-        controller.initialize(books);
-        controller.loadBooksFromFile();
+        controller.initialize(books); //AddController from passing the books in MainWindow
+
+
         stage.show();
     }
 
     public static void main(String[] args) {
         launch();
     }
-    private void loadBooksFromFile() {  // Method to load books from a JSON file.
-        String folderPath = "Books";
-        String jsonFilePath = folderPath + File.separator + "library.json";
-        File jsonFile = new File(jsonFilePath);
-        if (jsonFile.exists()) {
-            importFromJson(jsonFilePath);
-        } else {
-            updateBookListView();
-        }
-    }
+
 
     public ArrayList<Book> filterByTags() {
         String searchQuery = searchField.getText().toLowerCase();
@@ -197,6 +189,7 @@ public class MainWindowController extends Application {
         controller.initialize(bookTableView,books); //
         stage.showAndWait();
         exportToJson("library.json");
+
     }
 
     @FXML
@@ -321,7 +314,8 @@ public class MainWindowController extends Application {
             stage.setScene(scene);
             EditController editController = fxmlLoader.getController();
             editController.initialize(selectedBook,bookTableView,books);
-            stage.show();
+            stage.showAndWait();
+            exportToJson("library.json");
         }
     }
 

@@ -239,8 +239,6 @@ public class EditController {
                 alert.showAndWait();
 
             } else {
-
-
                 Book updatedBook = new Book(title, subtitle, authors, translators, isbn, publisher, date,
                         edition, cover, language, rating, tags, pageNumber, coverType);
                 books.set(index, updatedBook);
