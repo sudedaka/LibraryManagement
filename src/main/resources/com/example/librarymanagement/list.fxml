@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane style="-fx-background-color: #bcbcbc;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.ListController">
+    <children>
+        <VBox alignment="CENTER" layoutX="695.0" layoutY="391.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="630.0" AnchorPane.topAnchor="10.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" style="-fx-border-style: solid; -fx-border-width: 2; -fx-border-radius: 10px; -fx-padding: 5px;" text="Book Information" textAlignment="CENTER">
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                    <font>
+                        <Font name="Times New Roman Bold" size="24.0" />
+                    </font>
+                </Label>
+                <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                    <children>
+                        <ImageView fx:id="coverImage" fitHeight="250.0" fitWidth="280.0" pickOnBounds="true" preserveRatio="true" />
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                    <children>
+                        <Label text="Title:">
+                            <font>
+                                <Font name="Times New Roman Bold" size="14.0" />
+                            </font></Label>
+                        <Label fx:id="titleLbl" text="Label">
+                            <HBox.margin>
+                                <Insets left="20.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font name="Times New Roman" size="12.0" />
+                            </font></Label>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="324.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="Subtitle:">
+                            <font>
+                                <Font name="Times New Roman Bold" size="14.0" />
+                            </font></Label>
+                        <Label fx:id="subtitleLbl" text="Label">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font name="Times New Roman" size="12.0" />
+                            </font></Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="324.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="Authors">
+                            <font>
+                                <Font name="Times New Roman Bold" size="14.0" />
+                            </font></Label>
+                        <Label fx:id="authorsLbl" text="Label">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font name="Times New Roman" size="12.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="324.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="Translators:">
+                            <font>
+                                <Font name="Times New Roman Bold" size="14.0" />
+                            </font></Label>
+                        <Label fx:id="translatorsLbl" text="Label">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font name="Times New Roman" size="12.0" />
+                            </font></Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="324.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="ISBN:">
+                            <font>
+                                <Font name="Times New Roman Bold" size="14.0" />
+                            </font></Label>
+                        <Label fx:id="isbnLbl" text="Label">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font name="Times New Roman" size="12.0" />
+                            </font></Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="343.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="Publisher:">
+                            <font>
+                                <Font name="Times New Roman Bold" size="14.0" />
+                            </font></Label>
+                        <Label fx:id="publisherLbl" text="Label">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font name="Times New Roman" size="12.0" />
+                            </font></Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="360.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="Date:">
+                            <font>
+                                <Font name="Times New Roman Bold" size="14.0" />
+                            </font></Label>
+                        <Label fx:id="dateLbl" text="Label">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font name="Times New Roman" size="12.0" />
+                            </font></Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="378.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="Edition:">
+                            <font>
+                                <Font name="Times New Roman Bold" size="14.0" />
+                            </font></Label>
+                        <Label fx:id="editionLbl" text="Label">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font name="Times New Roman" size="12.0" />
+                            </font></Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="396.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="Language:">
+                            <font>
+                                <Font name="Times New Roman Bold" size="14.0" />
+                            </font></Label>
+                        <Label fx:id="languageLbl" text="Label">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font name="Times New Roman" size="12.0" />
+                            </font></Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="413.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="Rating:">
+                            <font>
+                                <Font name="Times New Roman Bold" size="14.0" />
+                            </font></Label>
+                        <Label fx:id="ratingLbl" text="Label">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font name="Times New Roman" size="12.0" />
+                            </font></Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="431.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="Tags:">
+                            <font>
+                                <Font name="Times New Roman Bold" size="14.0" />
+                            </font></Label>
+                        <Label fx:id="tagsLbl" text="Label">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font name="Times New Roman" size="12.0" />
+                            </font></Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="448.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="Number of pages:">
+                            <font>
+                                <Font name="Times New Roman Bold" size="14.0" />
+                            </font></Label>
+                        <Label fx:id="numberOfPagesLbl" text="Label">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font name="Times New Roman" size="12.0" />
+                            </font></Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="324.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="Cover type:">
+                            <font>
+                                <Font name="Times New Roman Bold" size="14.0" />
+                            </font></Label>
+                        <Label fx:id="coverTypeLbl" text="Label">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font name="Times New Roman" size="12.0" />
+                            </font></Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
