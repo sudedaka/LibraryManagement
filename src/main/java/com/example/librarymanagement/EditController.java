@@ -173,6 +173,7 @@ public class EditController {
 
         }
     }
+
     @FXML
     public void editButtonClick(ActionEvent event) {
         // update the book details with the edited values
@@ -245,6 +246,7 @@ public class EditController {
                 updateBookTableView();
                 clearFields();
                 ((Node) event.getSource()).getScene().getWindow().hide();
+
             }
         }
     }

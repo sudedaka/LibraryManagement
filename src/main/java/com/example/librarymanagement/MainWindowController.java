@@ -102,6 +102,7 @@ public class MainWindowController extends Application {
         stage.setScene(scene);
         MainWindowController controller = fxmlLoader.getController();
         controller.initialize(books); //AddController from passing the books in MainWindow
+        controller.loadBooksFromFile();
 
 
         stage.show();
@@ -109,6 +110,16 @@ public class MainWindowController extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+    private void loadBooksFromFile() {  // Method to load books from a JSON file.
+        String folderPath = "Books";
+        String jsonFilePath = folderPath + File.separator + "library.json";
+        File jsonFile = new File(jsonFilePath);
+        if (jsonFile.exists()) {
+            importFromJson(jsonFilePath);
+        } else {
+            updateBookListView();
+        }
     }
 
 
