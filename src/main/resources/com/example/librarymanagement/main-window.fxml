@@ -54,7 +54,7 @@
                              <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
                          </HBox.margin>
                      </TextField>
-                     <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #464646;" text="Search" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="NEVER" onAction="#handleSearch">
+                     <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSearch" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #464646;" text="Search" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="NEVER">
                          <HBox.margin>
                              <Insets bottom="10.0" left="0.0" right="10.0" top="10.0" />
                          </HBox.margin>
@@ -83,7 +83,7 @@
              </HBox>
             <HBox alignment="CENTER">
                <children>
-                  <TableView fx:id="bookTableView" style="-fx-border-style: solid;" HBox.hgrow="ALWAYS">
+                  <TableView fx:id="bookTableView" onMouseClicked="#openListController" style="-fx-border-style: solid;" HBox.hgrow="ALWAYS">
                     <columns>
                       <TableColumn fx:id="titleCol" prefWidth="75.0" text="Title" />
                       <TableColumn fx:id="subtitleCol" prefWidth="75.0" text="Subtitle" />

@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -364,6 +365,32 @@ public class MainWindowController extends Application {
 
         }
 
+    }
+
+    @FXML
+    public void openListController(MouseEvent event) throws IOException {
+        Book selectedBook = bookTableView.getSelectionModel().getSelectedItem();
+        if (event.getClickCount() == 2) { // Check if it's a double click
+
+            if (selectedBook != null) {
+                Stage stage = new Stage(); // Create a new stage
+                FXMLLoader fxmlLoader = new FXMLLoader(MainWindowController.class.getResource("list.fxml")); // Load the FXML file
+
+                Scene scene = new Scene(fxmlLoader.load(), 320, 240); // Create the scene
+                stage.setTitle("List Screen"); // Set the stage title
+                stage.setMaximized(true); // Maximize the stage
+                stage.setScene(scene); // Set the scene to the stage
+                // Get the controller instance
+                ListController listController = fxmlLoader.getController();
+
+                // Initialize the controller with the selected book and other necessary data
+                listController.initialize(selectedBook, bookTableView, books,event);
+
+
+                // Show the stage
+                stage.showAndWait();
+            }
+        }
     }
 
 
