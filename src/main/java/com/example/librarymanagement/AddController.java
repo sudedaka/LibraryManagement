@@ -24,6 +24,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,14 +88,28 @@ public class AddController {
     @FXML //This method, selects the parts to add and shows the url of the file.
     public void importCoverButton(ActionEvent event)
     {
-        FileChooser fc = new FileChooser();
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Image Files","*.png","*.jpg");
-        fc.getExtensionFilters().add(filter);
-        fc.setTitle("Select an cover image");
-        Stage stage = new Stage();
-        File file = fc.showOpenDialog(stage);
-        if (file != null) {
-            coverField.setText(file.getAbsolutePath());
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Cover Image");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg"));
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            // image chosen
+            String imagesDirectory = "src/images/";
+            File imagesDir = new File(imagesDirectory);
+            if (!imagesDir.exists()) {
+                imagesDir.mkdirs();
+            }
+            String imageName = selectedFile.getName();
+            String targetPath = imagesDirectory + imageName;
+            try {
+                Files.copy(selectedFile.toPath(), Paths.get(targetPath), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error copying image file.", ButtonType.OK);
+                alert.showAndWait();
+                return;
+            }
+            coverField.setText(targetPath);
         }
     }
 
@@ -393,6 +410,7 @@ public class AddController {
         String coverType = coverTypeField.getText();
         return coverType != null ? coverType: "";
     }
+
     private void showErrorAlert(String message) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Input Error");
