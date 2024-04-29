@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.fxml.Initializable;
@@ -33,14 +34,18 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.*;
-
+import java.util.List;
 import javafx.fxml.FXML;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 
 
 public class MainWindowController extends Application {
-
 
     @FXML
     private TableColumn<Book, String> titleCol;
@@ -67,8 +72,7 @@ public class MainWindowController extends Application {
     @FXML
     private TableView<Book> tableView;
 
-    //@FXML
-    // private ArrayList<Book> books;
+
     @FXML
     private TableColumn<Book, String> tagsCol;
     @FXML
@@ -80,6 +84,8 @@ public class MainWindowController extends Application {
 
     @FXML
     private TableView<Book> bookTableView;
+    @FXML
+    private ChoiceBox<String> tagChoose;
 
     @FXML
     private ListView<String> translatorsListView;
@@ -87,8 +93,9 @@ public class MainWindowController extends Application {
     private ObservableList<String> authorsList = FXCollections.observableArrayList();
     private ObservableList<String> translatorsList = FXCollections.observableArrayList();
     private ObservableList<String> tagsList = FXCollections.observableArrayList();
-
-
+    private ObservableList<Book> allBooks = FXCollections.observableArrayList();
+    private ObservableList<Book> filteredBooks = FXCollections.observableArrayList();
+    private Set<String> uniqueTags = new HashSet<>();
     @FXML
     private TextField searchField;
     @FXML
@@ -112,6 +119,64 @@ public class MainWindowController extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+    @FXML
+    public void initialize(ArrayList<Book> books) //This method, set the columns correctly and populate the TableView with data from your book list.
+    {
+        this.books = books;
+        //bookTableView.setItems(FXCollections.observableArrayList(books));
+
+        titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        subtitleCol.setCellValueFactory(new PropertyValueFactory<>("subtitle"));
+        authorsCol.setCellValueFactory(new PropertyValueFactory<>("authors"));
+        translatorsCol.setCellValueFactory(new PropertyValueFactory<>("translators"));
+        isbnCol.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+        publisherCol.setCellValueFactory(new PropertyValueFactory<>("publisher"));
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        editionCol.setCellValueFactory(new PropertyValueFactory<>("edition"));
+        coverCol.setCellValueFactory(new PropertyValueFactory<>("cover"));
+        languageCol.setCellValueFactory(new PropertyValueFactory<>("language"));
+        ratingCol.setCellValueFactory(new PropertyValueFactory<>("rating"));
+        tagsCol.setCellValueFactory(new PropertyValueFactory<>("tags"));
+        numberOfPagesCol.setCellValueFactory(new PropertyValueFactory<>("numberofPages"));
+        coverTypeCol.setCellValueFactory(new PropertyValueFactory<>("coverType"));
+
+
+        loadBooksAndTags();
+
+    }
+
+    private void loadBooksAndTags() {
+        allBooks.clear();
+        uniqueTags.clear();
+
+        allBooks.addAll(AddController.getBooks());
+        for (Book book : allBooks) {
+            uniqueTags.addAll(book.getTags());
+        }
+
+        // Remove duplicates
+        Set<String> set = new HashSet<>(uniqueTags);
+        uniqueTags.clear();
+        uniqueTags.addAll(set);
+
+        // Sort the tags alphabetically
+        List<String> sortedTags = new ArrayList<>(uniqueTags);
+        Collections.sort(sortedTags);
+
+        // Convert to a list to add an empty string at the beginning
+        List<String> tagList = new ArrayList<>(sortedTags);
+
+        tagChoose.getItems().setAll(tagList);
+        tagChoose.setOnAction(event -> filterBooksByTag());
+
+        // If there are no books, still enable the choice box
+        if (allBooks.isEmpty()) {
+            tagChoose.setDisable(false);
+        }
+
+    }
+
     private void loadBooksFromFile() {  // Method to load books from a JSON file.
         String folderPath = "Books";
         String jsonFilePath = folderPath + File.separator + "library.json";
@@ -123,60 +188,75 @@ public class MainWindowController extends Application {
         }
     }
 
+    @FXML
+    private void search() {
+        String query = searchField.getText().toLowerCase().trim();
+        ObservableList<Book> filteredBooks = FXCollections.observableArrayList();
 
-    public ArrayList<Book> filterByTags() {
-        String searchQuery = searchField.getText().toLowerCase();
-        String[] tagsToSearch = searchQuery.split("\\s+"); // Split search query by spaces
-        ArrayList<Book> filteredBooks = new ArrayList<>();
-
-        if (searchQuery.isEmpty()) {
-            return new ArrayList<>(books); // Return all books if search query is empty
-        }
-
-        for (Book book : bookTableView.getItems()) {
-            if (book.getTags() == null || book.getTags().isEmpty()) {
-                if (searchQuery.isEmpty()) {
-                    filteredBooks.add(book); // If the book has no tags and the search query is empty, include it
-                }
-            } else {
-                boolean allTagsFound = true;
-                for (String tag : tagsToSearch) {
-                    boolean tagFound = false;
-                    for (String bookTag : book.getTags()) {
-                        if (bookTag.toLowerCase().contains(tag)) {
-                            tagFound = true;
-                            break;
-                        }
-                    }
-                    if (!tagFound) {
-                        allTagsFound = false;
-                        break;
-                    }
-                }
-                if (allTagsFound) {
+        if (query.isEmpty()) {
+            filteredBooks.addAll(books); // Return all books if search query is empty
+        } else {
+            for (Book book : books) {
+                if (book.getTitle().toLowerCase().contains(query) ||
+                        book.getSubtitle().toLowerCase().contains(query) ||
+                        containsIgnoreCase(book.getAuthors(), query) ||
+                        containsIgnoreCase(book.getTranslators(), query) ||
+                        (book.getIsbn() != null && book.getIsbn().toLowerCase().contains(query)) ||
+                        (book.getPublisher() != null && book.getPublisher().toLowerCase().contains(query)) ||
+                        (book.getDate() != null && book.getDate().toString().toLowerCase().contains(query)) ||
+                        (book.getEdition() != null && book.getEdition().toLowerCase().contains(query)) ||
+                        (book.getLanguage() != null && book.getLanguage().toLowerCase().contains(query)) ||
+                        (book.getRating() != null && book.getRating().toLowerCase().contains(query)) ||
+                        containsIgnoreCase(book.getTags(), query) ||
+                        String.valueOf(book.getNumberofPages()).toLowerCase().contains(query) ||
+                        (book.getCoverType() != null && book.getCoverType().toLowerCase().contains(query))) {
                     filteredBooks.add(book);
                 }
             }
         }
 
-        return filteredBooks;
+        bookTableView.setItems(filteredBooks); // Update bookTableView
     }
 
-
-    public void show() {
-        ArrayList<Book> showSearchResults = filterByTags();
-
-        // Clear the current items in the TableView
-        bookTableView.getItems().clear();
-
-        // Add the filtered results to the TableView
-        bookTableView.getItems().addAll(showSearchResults);
+    private boolean containsIgnoreCase(ArrayList<String> list, String query) {
+        for (String item : list) {
+            if (item != null && item.toLowerCase().contains(query)) {
+                return true;
+            }
+        }
+        return false;
     }
+
     @FXML
     public void handleSearch(ActionEvent event) {
-        // Call the show() method to update the TableView with the filtered results
-        show();
+        // Call the search() method to update the ListView with the filtered results
+        search();
     }
+
+    private void filterBooksByTag() {
+        String selectedTag = tagChoose.getValue();
+        filteredBooks.clear();
+        if (selectedTag != null) {
+            for (Book book : allBooks) {
+                if (book.getTags().contains(selectedTag)) {
+                    filteredBooks.add(book);
+                }
+            }
+            bookTableView.setItems(filteredBooks);
+        } else {
+            bookTableView.setItems(allBooks);
+        }
+    }
+    private void updateUniqueTags() {
+        uniqueTags.clear();
+        for (Book book : allBooks) {
+            uniqueTags.addAll(book.getTags());
+        }
+
+
+
+    }
+
 
     @FXML
     public void refreshTableView(ActionEvent event) {
@@ -291,27 +371,7 @@ public class MainWindowController extends Application {
         books.add(newBook);
     }
 
-    @FXML
-    public void initialize(ArrayList<Book> books) //This method, set the columns correctly and populate the TableView with data from your book list.
-    {
 
-        bookTableView.setItems(FXCollections.observableArrayList(books));
-
-        titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-        subtitleCol.setCellValueFactory(new PropertyValueFactory<>("subtitle"));
-        authorsCol.setCellValueFactory(new PropertyValueFactory<>("authors"));
-        translatorsCol.setCellValueFactory(new PropertyValueFactory<>("translators"));
-        isbnCol.setCellValueFactory(new PropertyValueFactory<>("isbn"));
-        publisherCol.setCellValueFactory(new PropertyValueFactory<>("publisher"));
-        dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
-        editionCol.setCellValueFactory(new PropertyValueFactory<>("edition"));
-        coverCol.setCellValueFactory(new PropertyValueFactory<>("cover"));
-        languageCol.setCellValueFactory(new PropertyValueFactory<>("language"));
-        ratingCol.setCellValueFactory(new PropertyValueFactory<>("rating"));
-        tagsCol.setCellValueFactory(new PropertyValueFactory<>("tags"));
-        numberOfPagesCol.setCellValueFactory(new PropertyValueFactory<>("numberofPages"));
-        coverTypeCol.setCellValueFactory(new PropertyValueFactory<>("coverType"));
-    }
 
     @FXML
     public void editButtonClick(ActionEvent event) throws IOException {
@@ -335,34 +395,85 @@ public class MainWindowController extends Application {
 
         bookTableView.getItems().setAll(books);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @FXML
     public void deleteBook() {
 
         Book selectedBook = bookTableView.getSelectionModel().getSelectedItem();
 
         if (selectedBook != null) {
-            books.remove(selectedBook);
-            bookTableView.getItems().remove(selectedBook);
-            updateBookListView();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete Book");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to delete this book?");
 
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String folderPath = "Books";
-            String filePath = folderPath + File.separator + "library.json";
-            try (Writer writer = new FileWriter(filePath)) {
-                gson.toJson(books, writer);
-                System.out.println("Selected book is deleted from JSON file.");
-            } catch (IOException e) {
-                e.printStackTrace();
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+
+
+                books.remove(selectedBook);
+                bookTableView.getItems().remove(selectedBook);
+                updateBookListView();
+
+
+                // Remove book tags from the unique tags list if they are not associated with any other book
+                for (String tag : selectedBook.getTags()) {
+                    boolean tagExists = false;
+                    for (Book book : books) {
+                        if (book != selectedBook && book.getTags().contains(tag)) {
+                            tagExists = true;
+                            break;
+                        }
+                    }
+                    if (!tagExists) {
+                        uniqueTags.remove(tag);
+                    }
+                }
+
+                // Sort the tags and update the choice box
+                List<String> sortedTags = new ArrayList<>(uniqueTags);
+                Collections.sort(sortedTags);
+                tagChoose.getItems().setAll(sortedTags);
+
+                // Update JSON files
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String folderPath = "Books";
+                String filePath = folderPath + File.separator + "library.json";
+                try (Writer writer = new FileWriter(filePath)) {
+                    gson.toJson(books, writer);
+                    System.out.println("Selected book is deleted from JSON file.");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                gson = new Gson();
+                try (Writer writer = new FileWriter(userPath)) {
+                    gson.toJson(books, writer);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
-
-            gson = new Gson();
-            try (Writer writer = new FileWriter(userPath)) {
-                gson.toJson(books, writer);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
+        }else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Book Selected");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a book to delete.");
+            alert.showAndWait();
         }
 
     }

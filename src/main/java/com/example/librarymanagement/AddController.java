@@ -36,7 +36,7 @@ import javafx.fxml.FXML;
 
 public class AddController {
     @FXML
-    private ArrayList<Book> books = new ArrayList<>(); // Initialize the ArrayList
+    private static ArrayList<Book> books = new ArrayList<>(); // Initialize the ArrayList
     @FXML
     private TextField titleField;
     @FXML
@@ -417,5 +417,8 @@ public class AddController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    public static ArrayList<Book> getBooks() {
+        return books;
     }
 }
