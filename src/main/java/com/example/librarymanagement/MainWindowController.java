@@ -1,5 +1,4 @@
 package com.example.librarymanagement;
-
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -10,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -18,6 +18,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -503,6 +506,17 @@ public class MainWindowController extends Application {
             }
         }
     }
+    @FXML
+    public void helpButton(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Help");
+        alert.setHeaderText(null);
+        alert.setContentText(
+                "it will be written . "
+        );
+        alert.showAndWait();
+    }
+
 
 
 }

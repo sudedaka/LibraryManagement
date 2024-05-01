@@ -15,6 +15,7 @@
 
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Label?>
 <AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.MainWindowController">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -137,7 +138,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #464646;" text="Help" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="helpButton" alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #464646;" text="Help" textAlignment="CENTER" textFill="WHITE" onAction="#helpButton" >
                            <font>
                               <Font name="Times New Roman Bold" size="14.0" />
                            </font>
