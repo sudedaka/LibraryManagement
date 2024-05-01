@@ -114,7 +114,7 @@ public class MainWindowController extends Application {
         MainWindowController controller = fxmlLoader.getController();
         controller.initialize(books); //AddController from passing the books in MainWindow
         controller.loadBooksFromFile();
-
+        //controller.loadBooksAndTags();
 
         stage.show();
     }
@@ -149,11 +149,13 @@ public class MainWindowController extends Application {
 
     }
 
+
     private void loadBooksAndTags() {
         allBooks.clear();
         uniqueTags.clear();
 
-        allBooks.addAll(AddController.getBooks());
+        allBooks.addAll(bookTableView.getItems());
+       //allBooks.addAll(AddController.getBooks());
         for (Book book : allBooks) {
             uniqueTags.addAll(book.getTags());
         }
@@ -222,6 +224,9 @@ public class MainWindowController extends Application {
     }
 
     private boolean containsIgnoreCase(ArrayList<String> list, String query) {
+        if( list == null ){
+            return false;
+        }
         for (String item : list) {
             if (item != null && item.toLowerCase().contains(query)) {
                 return true;
