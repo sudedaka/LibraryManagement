@@ -244,9 +244,9 @@
                                 <Insets top="5.0" />
                             </padding>
                         </Label>
-                  <DatePicker fx:id="datePickerField" prefHeight="35.0" prefWidth="229.0">
+                  <DatePicker fx:id="datePickerField">
                      <HBox.margin>
-                        <Insets left="85.0" />
+                        <Insets left="84.0" />
                      </HBox.margin>
                   </DatePicker>
                     </children>

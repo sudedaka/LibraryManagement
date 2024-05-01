@@ -13,9 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Label?>
 <AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.MainWindowController">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -55,7 +52,7 @@
                  <children>
                      <TextField fx:id="searchField" prefHeight="35.0" promptText="Search books.." style="-fx-border-color: #bcbcbc;" HBox.hgrow="ALWAYS">
                          <HBox.margin>
-                             <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
+                             <Insets bottom="10.0" right="10.0" top="10.0" />
                          </HBox.margin>
                      </TextField>
                      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSearch" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #464646;" text="Search" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="NEVER">
@@ -71,7 +68,7 @@
                      </Button>
                      <Button fx:id="refreshButton" alignment="CENTER" mnemonicParsing="false" onAction="#refreshTableView" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #464646;" text="Refresh" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="NEVER">
                          <HBox.margin>
-                             <Insets bottom="10.0" left="10.0" right="50.0" top="10.0" />
+                             <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
                          </HBox.margin>
                          <font>
                              <Font name="Times New Roman Bold" size="14.0" />
@@ -80,11 +77,15 @@
                              <Cursor fx:constant="HAND" />
                          </cursor>
                      </Button>
-                     <ChoiceBox fx:id="tagChoose" prefWidth="100.0" style="-fx-background-color: #464646; -fx-text-fill: white;">
+                     <ChoiceBox fx:id="tagChoose" prefHeight="35.0" prefWidth="100.0" style="-fx-text-fill: white; -fx-border-style: solid; -fx-background-color: #bcbcbc; -fx-font-weight: bold; -fx-font-size: 14px; -fx-font-family: 'Times New Roman';">
                          <VBox.margin>
                              <Insets bottom="10.0" left="0.0" right="0.0" top="0.0" />
                          </VBox.margin>
+                         <HBox.margin>
+                             <Insets top="10.0" />
+                         </HBox.margin>
                      </ChoiceBox>
+
                  </children>
                  <VBox.margin>
                      <Insets bottom="20.0" left="50.0" right="50.0" top="20.0" />
@@ -92,7 +93,7 @@
              </HBox>
             <HBox alignment="CENTER">
                <children>
-                  <TableView fx:id="bookTableView" onMouseClicked="#openListController" style="-fx-border-style: solid;" HBox.hgrow="ALWAYS">
+                  <TableView fx:id="bookTableView" style="-fx-border-style: solid;" HBox.hgrow="ALWAYS">
                     <columns>
                       <TableColumn fx:id="titleCol" prefWidth="75.0" text="Title" />
                       <TableColumn fx:id="subtitleCol" prefWidth="75.0" text="Subtitle" />
@@ -138,7 +139,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="helpButton" alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #464646;" text="Help" textAlignment="CENTER" textFill="WHITE" onAction="#helpButton" >
+                        <Button fx:id="helpButton" alignment="CENTER" mnemonicParsing="false" onAction="#helpButton" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #464646;" text="Help" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="Times New Roman Bold" size="14.0" />
                            </font>

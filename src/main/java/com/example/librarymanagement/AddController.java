@@ -125,6 +125,27 @@ public class AddController {
         authorsListView.setItems(authorsList);
         translatorsListView.setItems(translatorsList);
         tagsListView.setItems(tagsList);
+
+        isbnField.textProperty().addListener((observable, oldValue, newValue) -> {
+            // If the input value from the user is not a digit or exceeds 13 characters
+            if (!newValue.matches("\\d+") || newValue.length() > 13) {
+                // Remove any non-digit characters and limit to 13 characters
+                String formattedISBN = newValue.replaceAll("[^\\d]", "");
+                if (formattedISBN.length() > 13) {
+                    formattedISBN = formattedISBN.substring(0, 13);
+                }
+                // Add "-" after every four characters
+                StringBuilder formattedValue = new StringBuilder();
+                for (int i = 0; i < formattedISBN.length(); i++) {
+                    if (i > 0 && i % 4 == 0) {
+                        formattedValue.append("-");
+                    }
+                    formattedValue.append(formattedISBN.charAt(i));
+                }
+                isbnField.setText(formattedValue.toString());
+            }
+        });
+
     }
 
     @FXML //It updates the tableView in the MainWindowController
@@ -285,18 +306,30 @@ public class AddController {
         return subtitle != null ? subtitle : "";
     }
 
-    public String getISBN()
-    {    String isbn=isbnField.getText();
-        if (isbn==null||isbn.isBlank()) {
-            return "";}
-        else if  (isbn.matches("\\d{13}")) {
-            return isbn;
-        } else {
-            // If not numeric, show error message
-            showErrorAlert("ISBN must be a 13-digit number.");
-            return null;
+    public String getISBN() {
+        String isbn = isbnField.getText();
+        if (isbn == null || isbn.isBlank()) {
+            return ""; // Return empty string if ISBN field is empty
+        }
+        else
+        {
+            String formattedISBN = isbn.replaceAll("[^\\d]", ""); // Remove any non-digit characters
+            if (formattedISBN.length() > 13) {     // Limit to 13 characters
+                formattedISBN = formattedISBN.substring(0, 13);
+            }
+            // Add "-" after every four characters
+            StringBuilder formattedValue = new StringBuilder();
+            for (int i = 0; i < formattedISBN.length(); i++) {
+                if (i > 0 && i % 4 == 0) {
+                    formattedValue.append("-");
+                }
+                formattedValue.append(formattedISBN.charAt(i));
+            }
+            isbnField.setText(formattedValue.toString());
+            return formattedValue.toString();
         }
     }
+
     public String getPublisher()
     {
         String publisher =  publisherField.getText();

@@ -114,7 +114,9 @@ public class MainWindowController extends Application {
         MainWindowController controller = fxmlLoader.getController();
         controller.initialize(books); //AddController from passing the books in MainWindow
         controller.loadBooksFromFile();
-        //controller.loadBooksAndTags();
+        controller.loadBooksAndTags(); // Load books and tags
+        controller.filterBooksByTag(); // Filter books by tags
+
 
         stage.show();
     }
@@ -157,7 +159,9 @@ public class MainWindowController extends Application {
         allBooks.addAll(bookTableView.getItems());
        //allBooks.addAll(AddController.getBooks());
         for (Book book : allBooks) {
-            uniqueTags.addAll(book.getTags());
+            if (book.getTags() != null) {
+                uniqueTags.addAll(book.getTags());
+            }
         }
 
         // Remove duplicates
@@ -241,12 +245,15 @@ public class MainWindowController extends Application {
         search();
     }
 
+
     private void filterBooksByTag() {
         String selectedTag = tagChoose.getValue();
         filteredBooks.clear();
+
         if (selectedTag != null) {
             for (Book book : allBooks) {
-                if (book.getTags().contains(selectedTag)) {
+                // Check if the tags list is not null before calling contains(selectedTag)
+                if (book.getTags() != null && book.getTags().contains(selectedTag)) {
                     filteredBooks.add(book);
                 }
             }
@@ -255,6 +262,7 @@ public class MainWindowController extends Application {
             bookTableView.setItems(allBooks);
         }
     }
+
     private void updateUniqueTags() {
         uniqueTags.clear();
         for (Book book : allBooks) {
