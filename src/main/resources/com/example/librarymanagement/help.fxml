@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.control.Button?>
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label text="User Manual" alignment="CENTER">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <VBox spacing="10" style="-fx-background-color: #f0f0f0;" padding="10">
+            <Label text="1. Add a Book:" wrapText="true" />
+            <Label text="Click on the 'Add' button to add a new book to the library." wrapText="true" />
+            <Label text="2. Edit a Book:" wrapText="true" />
+            <Label text="Select a book from the table, then click on the 'Edit' button to edit its details." wrapText="true" />
+            <Label text="3. Delete a Book:" wrapText="true" />
+            <Label text="Select a book from the table, then click on the 'Delete' button to remove it from the library." wrapText="true" />
+            <Label text="4. Search Books:" wrapText="true" />
+            <Label text="Enter a search query in the search field and click on the 'Search' button to find books." wrapText="true" />
+            <Label text="5. Import/Export:" wrapText="true" />
+            <Label text="Use the 'Import' and 'Export' buttons to import/export books to/from a JSON file." wrapText="true" />
+        </VBox>
+        <Button fx:id="closeButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: #464646;" text="X" textFill="WHITE">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+            </padding>
+        </Button>
+
+
+
+    </children>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+</VBox>

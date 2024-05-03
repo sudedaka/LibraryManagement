@@ -4,6 +4,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -46,6 +47,7 @@ import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+
 
 
 public class MainWindowController extends Application {
@@ -147,7 +149,7 @@ public class MainWindowController extends Application {
         coverTypeCol.setCellValueFactory(new PropertyValueFactory<>("coverType"));
 
 
-        loadBooksAndTags();
+       loadBooksAndTags();
 
     }
 
@@ -185,6 +187,8 @@ public class MainWindowController extends Application {
         }
 
     }
+
+
 
     private void loadBooksFromFile() {  // Method to load books from a JSON file.
         String folderPath = "Books";
@@ -272,6 +276,7 @@ public class MainWindowController extends Application {
 
 
     }
+
 
 
     @FXML
@@ -519,6 +524,8 @@ public class MainWindowController extends Application {
             }
         }
     }
+
+
     @FXML
     public void helpButton(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -530,7 +537,4 @@ public class MainWindowController extends Application {
         alert.showAndWait();
     }
 
-
-
 }
-
