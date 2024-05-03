@@ -4,7 +4,6 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import javafx.application.Application;
-import javafx.application.HostServices;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -47,7 +46,6 @@ import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
-
 
 
 public class MainWindowController extends Application {
@@ -106,6 +104,7 @@ public class MainWindowController extends Application {
     @FXML
     private Button searchButton;
 
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainWindowController.class.getResource("main-window.fxml"));
@@ -116,8 +115,6 @@ public class MainWindowController extends Application {
         MainWindowController controller = fxmlLoader.getController();
         controller.initialize(books); //AddController from passing the books in MainWindow
         controller.loadBooksFromFile();
-        controller.loadBooksAndTags(); // Load books and tags
-        controller.filterBooksByTag(); // Filter books by tags
 
 
         stage.show();
@@ -149,44 +146,12 @@ public class MainWindowController extends Application {
         coverTypeCol.setCellValueFactory(new PropertyValueFactory<>("coverType"));
 
 
-       loadBooksAndTags();
+
 
     }
 
 
-    private void loadBooksAndTags() {
-        allBooks.clear();
-        uniqueTags.clear();
 
-        allBooks.addAll(bookTableView.getItems());
-       //allBooks.addAll(AddController.getBooks());
-        for (Book book : allBooks) {
-            if (book.getTags() != null) {
-                uniqueTags.addAll(book.getTags());
-            }
-        }
-
-        // Remove duplicates
-        Set<String> set = new HashSet<>(uniqueTags);
-        uniqueTags.clear();
-        uniqueTags.addAll(set);
-
-        // Sort the tags alphabetically
-        List<String> sortedTags = new ArrayList<>(uniqueTags);
-        Collections.sort(sortedTags);
-
-        // Convert to a list to add an empty string at the beginning
-        List<String> tagList = new ArrayList<>(sortedTags);
-
-        tagChoose.getItems().setAll(tagList);
-        tagChoose.setOnAction(event -> filterBooksByTag());
-
-        // If there are no books, still enable the choice box
-        if (allBooks.isEmpty()) {
-            tagChoose.setDisable(false);
-        }
-
-    }
 
 
 
@@ -247,34 +212,6 @@ public class MainWindowController extends Application {
     public void handleSearch(ActionEvent event) {
         // Call the search() method to update the ListView with the filtered results
         search();
-    }
-
-
-    private void filterBooksByTag() {
-        String selectedTag = tagChoose.getValue();
-        filteredBooks.clear();
-
-        if (selectedTag != null) {
-            for (Book book : allBooks) {
-                // Check if the tags list is not null before calling contains(selectedTag)
-                if (book.getTags() != null && book.getTags().contains(selectedTag)) {
-                    filteredBooks.add(book);
-                }
-            }
-            bookTableView.setItems(filteredBooks);
-        } else {
-            bookTableView.setItems(allBooks);
-        }
-    }
-
-    private void updateUniqueTags() {
-        uniqueTags.clear();
-        for (Book book : allBooks) {
-            uniqueTags.addAll(book.getTags());
-        }
-
-
-
     }
 
 
@@ -357,11 +294,11 @@ public class MainWindowController extends Application {
             e.printStackTrace();
         }
 
-       try {
+        try {
             Gson gson = new Gson();
             String jsonFormat = gson.toJson(books);
 
-           try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
                 writer.write(jsonFormat);
             } catch (IOException e) {
                 System.err.println("An error occurred while writing to the file: " + e.getMessage());
@@ -444,31 +381,9 @@ public class MainWindowController extends Application {
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-
-
                 books.remove(selectedBook);
                 bookTableView.getItems().remove(selectedBook);
                 updateBookListView();
-
-
-                // Remove book tags from the unique tags list if they are not associated with any other book
-                for (String tag : selectedBook.getTags()) {
-                    boolean tagExists = false;
-                    for (Book book : books) {
-                        if (book != selectedBook && book.getTags().contains(tag)) {
-                            tagExists = true;
-                            break;
-                        }
-                    }
-                    if (!tagExists) {
-                        uniqueTags.remove(tag);
-                    }
-                }
-
-                // Sort the tags and update the choice box
-                List<String> sortedTags = new ArrayList<>(uniqueTags);
-                Collections.sort(sortedTags);
-                tagChoose.getItems().setAll(sortedTags);
 
                 // Update JSON files
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -480,12 +395,15 @@ public class MainWindowController extends Application {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                gson = new Gson();
-                try (Writer writer = new FileWriter(userPath)) {
-                    gson.toJson(books, writer);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (userPath != null) {
+                    gson = new Gson();
+                    try (Writer writer = new FileWriter(userPath)) {
+                        gson.toJson(books, writer);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    System.out.println("userPath is not set. Cannot write to user-specified file.");
                 }
 
             }
@@ -524,8 +442,6 @@ public class MainWindowController extends Application {
             }
         }
     }
-
-
     @FXML
     public void helpButton(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -536,5 +452,16 @@ public class MainWindowController extends Application {
         );
         alert.showAndWait();
     }
+    public void filterButtonClick(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(MainWindowController.class.getResource("tagfilter.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(),300, 500);
+        stage.setTitle("Filters by Tags");
+        stage.setScene(scene);
+        com.example.librarymanagement.FilterController controller = fxmlLoader.getController();
+        controller.initialize(bookTableView, books); //
+        stage.showAndWait();
 
+
+    }
 }

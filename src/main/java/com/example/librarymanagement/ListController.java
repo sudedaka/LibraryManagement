@@ -174,37 +174,4 @@ public class ListController {
     }
 
 
-    // Dosya yolunu almak için bir String alanı
-    /*private String coverImagePath;
-
-    // ImageView'e resim eklemek için bir metot
-    public void setCoverImage(String imagePath) {
-        try {
-            File file = new File(imagePath);
-            if (file.exists()) {
-                Image image = new Image(file.toURI().toString());
-                coverImage.setImage(image);
-                coverImage.setFitWidth(200); // Genişliği sabit tut
-                coverImage.setFitHeight(300); // Yüksekliği sabit tut
-            } else {
-                // Dosya bulunamadı hatası
-                System.out.println("Dosya bulunamadı: " + imagePath);
-            }
-        } catch (Exception e) {
-            // Resim yüklenirken bir hata oluştu
-            e.printStackTrace();
-        }
-    }
-
-    // Dosya yolunu ayarlamak için bir setter
-    public void setCoverImagePath(String coverImagePath) {
-        this.coverImagePath = coverImagePath;
-    }
-
-    // ImageView'daki resmi temizlemek için bir metot
-    public void clearCoverImage() {
-        coverImage.setImage(null);
-    }*/
-
-
 }

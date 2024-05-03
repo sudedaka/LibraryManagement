@@ -1,23 +1,5 @@
 [
   {
-    "title": "book2",
-    "subtitle": "",
-    "authors": [],
-    "translators": [],
-    "isbn": "",
-    "publisher": "",
-    "edition": "",
-    "cover": "",
-    "language": "",
-    "rating": "",
-    "tags": [
-      "horror",
-      "turkish"
-    ],
-    "numberofPages": "",
-    "coverType": ""
-  },
-  {
     "title": "book7",
     "subtitle": "",
     "authors": [],
@@ -130,7 +112,7 @@
     "isbn": "",
     "publisher": "",
     "edition": "",
-    "cover": "",
+    "cover": "src/images/Ekran görüntüsü 2024-01-11 231024.png",
     "language": "",
     "rating": "",
     "tags": [
