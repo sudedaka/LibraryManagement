@@ -208,9 +208,19 @@ public class AddController {
         }
     }
 
+    private boolean isISBNUnique(String isbn) {
+        for (Book book : books) {
+            if (book.getIsbn().equals(isbn)) {
+                return false; //Returns false if the ISBN already exists in the list
+            }
+        }
+        return true; // Returns true if the ISBN doesn't exist in the list
+    }
+
     //When on clicked ADD: Creates a new Book object, adds it to the books list,clear fields,updates information.
     @FXML
      private void addButtonClick(ActionEvent event) {
+
         String title = getTitle();
         String subtitle = getSubtitle();
         ArrayList<String> authors = getAuthors();
@@ -249,7 +259,8 @@ public class AddController {
         }
         if (authors == null) {
             return;
-        } else if ((title == null || title.isBlank()) &&
+        }
+        if((title == null || title.isBlank()) &&
                 (subtitle == null || subtitle.isBlank()) &&
                 (authors == null || authors.isEmpty()) &&
                 (translators == null || translators.isEmpty()) &&
@@ -268,8 +279,19 @@ public class AddController {
                 alert.setHeaderText("No Information Entered!");
                 alert.setContentText("Please enter information before adding the book!");
                 alert.showAndWait();
+        }
+        // ISBN is empty or not checking
+        if (isbn.isBlank()) {
+            showErrorAlert("ISBN cannot be empty.");
+            return;
+        }
 
-        } else {
+        // ISBN is unique or not checking
+        if (!isISBNUnique(isbn)) {
+            showErrorAlert("ISBN must be unique.");
+            return;
+        }
+        else {
             Book newBook = new Book(title, subtitle, authors, translators, isbn, publisher, date, edition, cover, language, rating, tags, pageNumber, coverType);
             books.add(newBook);
             clearFields(); // Clear all the fields.
@@ -316,6 +338,11 @@ public class AddController {
             String formattedISBN = isbn.replaceAll("[^\\d]", ""); // Remove any non-digit characters
             if (formattedISBN.length() > 13) {     // Limit to 13 characters
                 formattedISBN = formattedISBN.substring(0, 13);
+            }
+            // ISBN length check
+            if (formattedISBN.length() != 13) {
+                showErrorAlert("ISBN must contain exactly 13 digits.");
+                return null;
             }
             // Add "-" after every four characters
             StringBuilder formattedValue = new StringBuilder();

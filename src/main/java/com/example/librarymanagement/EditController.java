@@ -198,6 +198,15 @@ public class EditController {
 
     }
 
+    private boolean isISBNUnique(String isbn) {
+        for (Book book : books) {
+            if (book.getIsbn().equals(isbn)) {
+                return false; //Returns false if the ISBN already exists in the list
+            }
+        }
+        return true; // Returns true if the ISBN doesn't exist in the list
+    }
+
     @FXML
     public void editButtonClick(ActionEvent event) {
         // update the book details with the edited values
@@ -260,10 +269,16 @@ public class EditController {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning");
                 alert.setHeaderText("No Information Entered");
-                alert.setContentText("Please enter information before adding the book.");
+                alert.setContentText("Please enter information before editing the book.");
                 alert.showAndWait();
 
-            } else {
+            }
+            // ISBN is empty or not checking
+            if (isbn.isBlank()) {
+                showErrorAlert("ISBN cannot be empty.");
+                return;
+            }
+            else {
                 Book updatedBook = new Book(title, subtitle, authors, translators, isbn, publisher, date,
                         edition, cover, language, rating, tags, pageNumber, coverType);
                 books.set(index, updatedBook);
@@ -312,11 +327,17 @@ public class EditController {
         if (isbn == null || isbn.isBlank()) {
             return ""; // Return empty string if ISBN field is empty
         }
+
         else
         {
             String formattedISBN = isbn.replaceAll("[^\\d]", ""); // Remove any non-digit characters
             if (formattedISBN.length() > 13) {     // Limit to 13 characters
                 formattedISBN = formattedISBN.substring(0, 13);
+            }
+            // ISBN length check
+            if (formattedISBN.length() != 13) {
+                showErrorAlert("ISBN must contain exactly 13 digits.");
+                return null;
             }
             // Add "-" after every four characters
             StringBuilder formattedValue = new StringBuilder();

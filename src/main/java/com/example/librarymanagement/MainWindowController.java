@@ -115,8 +115,6 @@ public class MainWindowController extends Application {
         MainWindowController controller = fxmlLoader.getController();
         controller.initialize(books); //AddController from passing the books in MainWindow
         controller.loadBooksFromFile();
-
-
         stage.show();
     }
 
@@ -128,8 +126,7 @@ public class MainWindowController extends Application {
     public void initialize(ArrayList<Book> books) //This method, set the columns correctly and populate the TableView with data from your book list.
     {
         this.books = books;
-        //bookTableView.setItems(FXCollections.observableArrayList(books));
-
+        //bookTableView.setItems(FXCollections.observableArrayList(books));1
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         subtitleCol.setCellValueFactory(new PropertyValueFactory<>("subtitle"));
         authorsCol.setCellValueFactory(new PropertyValueFactory<>("authors"));
@@ -144,16 +141,7 @@ public class MainWindowController extends Application {
         tagsCol.setCellValueFactory(new PropertyValueFactory<>("tags"));
         numberOfPagesCol.setCellValueFactory(new PropertyValueFactory<>("numberofPages"));
         coverTypeCol.setCellValueFactory(new PropertyValueFactory<>("coverType"));
-
-
-
-
     }
-
-
-
-
-
 
     private void loadBooksFromFile() {  // Method to load books from a JSON file.
         String folderPath = "Books";
