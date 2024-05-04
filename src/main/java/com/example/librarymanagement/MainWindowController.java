@@ -27,12 +27,15 @@ import javafx.stage.Stage;
 import com.google.gson.Gson;
 import javafx.scene.control.TableView;
 import java.io.*;
+import java.io.InputStream;
 
+import javafx.application.HostServices;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -104,6 +107,10 @@ public class MainWindowController extends Application {
     @FXML
     private Button searchButton;
 
+    private HostServices hostServices;
+    public void setHostServices(HostServices hostServices) {
+        this.hostServices = hostServices;
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -115,6 +122,7 @@ public class MainWindowController extends Application {
         stage.setScene(scene);
         MainWindowController controller = fxmlLoader.getController();
         controller.initialize(books); //AddController from passing the books in MainWindow
+        controller.setHostServices(getHostServices()); // Pass HostServices to the controller
         controller.loadBooksFromFile();
         stage.show();
 
@@ -435,13 +443,16 @@ public class MainWindowController extends Application {
     }
     @FXML
     public void helpButton(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Help");
-        alert.setHeaderText(null);
-        alert.setContentText(
-                "it will be written . "
-        );
-        alert.showAndWait();
+        File userManual = new File("src/main/resources/UserManual.pdf");
+        if (userManual.exists()) {
+            hostServices.showDocument(userManual.toURI().toString());
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("User Manual not found!");
+            alert.showAndWait();
+        }
     }
     public void filterButtonClick(ActionEvent event) throws IOException {
         Stage stage = new Stage();
@@ -455,4 +466,17 @@ public class MainWindowController extends Application {
 
 
     }
+
+    /*private void showUserManual() {
+
+        try {
+            File userGuide = new File("src/resources/UserManual.pdf");
+            if (userGuide.exists()) {
+                Desktop.getDesktop().open(userGuide);
+            } else {
+
+    }
+
+     */
+
 }
