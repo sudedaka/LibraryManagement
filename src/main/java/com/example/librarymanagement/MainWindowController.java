@@ -213,6 +213,7 @@ public class MainWindowController extends Application {
 
         // Add all the books back to the TableView
         bookTableView.getItems().addAll(books);
+        searchField.clear();
     }
 
 

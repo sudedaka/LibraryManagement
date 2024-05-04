@@ -395,21 +395,32 @@ public class EditController {
             return language;
         }
     }
-    public String getRating()
-    {
+    public String getRating() {
         String rating = ratingField.getText();
-        if (rating == null||rating.isBlank()) {
-            return "";}
-        else if (rating.matches("\\d+")) {
-            return rating; // If input is integer
+        if (rating == null || rating.isBlank()) {
+            return "";
+        } else if (rating.matches("\\d+")) {
+            int ratingValue = Integer.parseInt(rating);
+            if (ratingValue <= 5) {
+                return rating; // If input is integer and less than or equal to 5
+            } else {
+                showErrorAlert("Rating must be between 0 and 5.");
+                return null;
+            }
         } else if (rating.matches("\\d+\\.\\d+")) {
-            return rating; // If input is double
-        }
-        else{
+            double ratingValue = Double.parseDouble(rating);
+            if (ratingValue <= 5) {
+                return rating; // If input is double and less than or equal to 5
+            } else {
+                showErrorAlert("Rating must be between 0 and 5.");
+                return null;
+            }
+        } else {
             showErrorAlert("Rating must be numeric.");
             return null;
         }
     }
+
     public ArrayList<String> getAuthors() {
         ArrayList<String> authorList = new ArrayList<>(authorsListView.getItems());
         for (String author : authorList) {

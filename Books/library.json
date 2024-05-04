@@ -169,5 +169,19 @@
     ],
     "numberofPages": "256",
     "coverType": "Hardcover"
+  },
+  {
+    "title": "deneme",
+    "subtitle": "",
+    "authors": [],
+    "translators": [],
+    "isbn": "1111-1111-1111-1",
+    "publisher": "",
+    "edition": "",
+    "cover": "",
+    "language": "",
+    "rating": "2",
+    "numberofPages": "",
+    "coverType": ""
   }
 ]
