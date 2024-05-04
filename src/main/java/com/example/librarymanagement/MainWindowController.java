@@ -110,12 +110,14 @@ public class MainWindowController extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(MainWindowController.class.getResource("main-window.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         stage.setTitle("Library Management");
+        scene.getStylesheets().add(getClass().getResource("/com/example/librarymanagement/styles.css").toExternalForm());
         stage.setMaximized(true);
         stage.setScene(scene);
         MainWindowController controller = fxmlLoader.getController();
         controller.initialize(books); //AddController from passing the books in MainWindow
         controller.loadBooksFromFile();
         stage.show();
+
     }
 
     public static void main(String[] args) {

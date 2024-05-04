@@ -1,0 +1,31 @@
+/*hovering over the button will run these codes */
+.button {
+  -fx-background-color: #464646;
+  -fx-text-fill: white;
+  -fx-transition-duration: 0.4s;
+}
+
+.button:hover {
+  -fx-border-width: 2px;
+  -fx-text-fill: black;
+  -fx-border-style: solid;
+  -fx-background-color: transparent;
+}
+
+#helpButton:hover {
+  -fx-border-style: solid;
+  -fx-border-color: #cc0000;
+  -fx-text-fill: #cc0000;
+}
+
+/* Define the style for the selected row text */
+.table-row-cell:selected {
+  -fx-background-color: #9dabaa; /* Change this color to your desired background color */
+  -fx-text-width: 2px;
+}
+
+#applyButton:hover{
+  -fx-border-style: solid;
+  -fx-border-color: #cc0000;
+  -fx-text-fill: #cc0000;
+}

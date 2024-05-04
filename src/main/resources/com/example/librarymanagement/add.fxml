@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane style="-fx-background-color: #464646;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.AddController">
+<AnchorPane stylesheets="/com/example/librarymanagement/styles.css" style="-fx-background-color: #464646;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.AddController">
    <children>
       <VBox alignment="CENTER" layoutX="685.0" layoutY="381.0" AnchorPane.leftAnchor="630.0" AnchorPane.topAnchor="10.0">
          <children>
