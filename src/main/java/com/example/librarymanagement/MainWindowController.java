@@ -1,7 +1,5 @@
 package com.example.librarymanagement;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -24,7 +22,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import com.google.gson.Gson;
 import javafx.scene.control.TableView;
 import java.io.*;
 import java.io.InputStream;
@@ -35,6 +32,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -242,23 +240,30 @@ public class MainWindowController extends Application {
     }
 
     @FXML
-    public void importFromJson(String filePath) {   // Method to read data from a JSON file
-        try {
-            Gson gson = new Gson();
-            try (Reader reader = new FileReader(filePath)) {
-                books = gson.fromJson(reader, new TypeToken<ArrayList<Book>>() {
-                }.getType());  // Add data read from JSON file to the books list
-                updateBookListView();
-                System.out.println("Books imported from JSON .");
-            } catch (IOException e) {
-                e.printStackTrace();
+    public void importFromJson(String filePath) {
+        Gson gson = new Gson();
+        try (Reader reader = new FileReader(filePath)) {
+            JsonElement jsonElement = JsonParser.parseReader(reader);
+            if (jsonElement.isJsonArray()) {
+                Type bookListType = new TypeToken<ArrayList<Book>>() {}.getType();
+                ArrayList<Book> newBooks = gson.fromJson(jsonElement, bookListType);
+                books.addAll(newBooks);
+            } else if (jsonElement.isJsonObject()) {
+                Book newBook = gson.fromJson(jsonElement, Book.class);
+                books.add(newBook);
             }
-        } catch (JsonIOException e) {
-            throw new RuntimeException(e);
-        } catch (JsonSyntaxException e) {
+            updateBookListView();
+            exportToJson("library.json");
+            System.out.println("Books imported from JSON.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JsonIOException | JsonSyntaxException e) {
             throw new RuntimeException(e);
         }
     }
+
+
+
 
     @FXML
     public void importButton(ActionEvent event) throws IOException {
@@ -352,20 +357,6 @@ public class MainWindowController extends Application {
 
         bookTableView.getItems().setAll(books);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @FXML
     public void deleteBook() {

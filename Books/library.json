@@ -50,9 +50,9 @@
     "publisher": "Harper Perennial Modern Classics",
     "date": "1932-10-19",
     "edition": "1",
-    "cover": "",
+    "cover": "src/images/default.jpg",
     "language": "English",
-    "rating": "4.4",
+    "rating": "4.3",
     "tags": [
       "Science Fiction",
       "Dystopian Fiction"
@@ -105,29 +105,6 @@
     "coverType": "Softcover"
   },
   {
-    "title": "Kurk Mantolu Madonna",
-    "subtitle": "Bir Ressamin Romani",
-    "authors": [
-      "Sabahattin Ali"
-    ],
-    "translators": [
-      "Guven Turan",
-      "Guzin Dino"
-    ],
-    "isbn": "9789-7536-3802-2",
-    "publisher": "Yapi Kredi Yayinlari",
-    "date": "2023-02-15",
-    "edition": "15",
-    "cover": "src/images/kurkmantolumadonna.png",
-    "language": "Turkish",
-    "rating": "4.6",
-    "tags": [
-      "Roman"
-    ],
-    "numberofPages": "184",
-    "coverType": "Softcover"
-  },
-  {
     "title": "The Catcher in the Rye",
     "subtitle": "",
     "authors": [
@@ -148,26 +125,31 @@
     "coverType": "Paperback"
   },
   {
-    "title": "Beyaz Zambaklar Ulkesinde",
-    "subtitle": "Sibirya\u0027da Gecen Bir Ask Hikayesi",
-    "authors": [
-      "Grigory Petrov"
-    ],
-    "translators": [
-      "Fikret Adil"
-    ],
-    "isbn": "9786-0512-1296-5",
-    "publisher": "Tudem Yayinlari",
-    "date": "2024-03-15",
-    "edition": "5",
+    "title": "Wuthering Heights",
+    "subtitle": "",
+    "authors": [],
+    "translators": [],
+    "isbn": "1234-5678-9045-6",
+    "publisher": "",
+    "edition": "",
     "cover": "",
-    "language": "Turkish",
-    "rating": "4.7",
-    "tags": [
-      "Roman",
-      "Tarih"
-    ],
-    "numberofPages": "256",
-    "coverType": "Hardcover"
+    "language": "",
+    "rating": "3",
+    "numberofPages": "",
+    "coverType": ""
+  },
+  {
+    "title": "a",
+    "subtitle": "",
+    "authors": [],
+    "translators": [],
+    "isbn": "1234-5678-9123-4",
+    "publisher": "",
+    "edition": "",
+    "cover": "",
+    "language": "",
+    "rating": "",
+    "numberofPages": "",
+    "coverType": ""
   }
 ]

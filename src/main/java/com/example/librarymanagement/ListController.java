@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URL;
 import java.time.LocalDate;
@@ -73,10 +74,9 @@ public class ListController {
                     numberOfPagesLbl.setText(selectedBook.getNumberofPages());
                     coverTypeLbl.setText(selectedBook.getCoverType());
 
-                });
-                String imageUrl = selectedBook.getCover();
-                if (imageUrl != null && !imageUrl.isEmpty()) {
-                    try {
+                }); String imageUrl = selectedBook.getCover();
+                try {
+                    if (imageUrl != null && !imageUrl.isEmpty()) {
                         File file = new File(imageUrl);
                         if (file.exists()) {
                             Image image = new Image(file.toURI().toString());
@@ -84,12 +84,37 @@ public class ListController {
                             coverImage.setFitWidth(200);
                             coverImage.setFitHeight(300);
                         } else {
-                            System.out.println("File not found: " + imageUrl);
+                            throw new FileNotFoundException("Dosya bulunamadı: " + imageUrl);
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    } else {
+                        String defaultImagePath = "src/images/default.jpg";
+                        File defaultImageFile = new File(defaultImagePath);
+                        if (defaultImageFile.exists()) {
+                            Image defaultImage = new Image(defaultImageFile.toURI().toString());
+                            coverImage.setImage(defaultImage);
+                            coverImage.setFitWidth(200);
+                            coverImage.setFitHeight(300);
+                        } else {
+                            System.out.println("selected file not found " + defaultImagePath);
+                        }
                     }
+                } catch (FileNotFoundException ex) {
+                    System.out.println("file not found " + ex.getMessage());
+                    String defaultImagePath = "src/images/default.jpg";
+                    File defaultImageFile = new File(defaultImagePath);
+                    if (defaultImageFile.exists()) {
+                        Image defaultImage = new Image(defaultImageFile.toURI().toString());
+                        coverImage.setImage(defaultImage);
+                        coverImage.setFitWidth(200);
+                        coverImage.setFitHeight(300);
+                    } else {
+                        System.out.println("image not found " + defaultImagePath);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
+
             }
         }
     }
