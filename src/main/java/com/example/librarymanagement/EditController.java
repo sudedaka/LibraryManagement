@@ -159,18 +159,15 @@ public class EditController {
             }
             isbnField.setText(book.getIsbn());
             publisherField.setText(book.getPublisher());
-
-
-                // Attempt to parse and set the date
-                if (book.getDate() != null && !book.getDate().isEmpty()) {
-                    try {
-                        LocalDate date = LocalDate.parse(book.getDate(), DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-                        datePickerField.setValue(date);
-                    } catch (DateTimeParseException ex) {
-                        System.err.println("Error: Date could not be parsed. " + ex.getMessage());
-                        datePickerField.setValue(null);  // Set to null if parsing fails
-                    }
+            if (book.getDate() != null && !book.getDate().isEmpty()) {
+                LocalDate date = parseDate(book.getDate());
+                if (date != null) {
+                    datePickerField.setValue(date);
+                } else {
+                    System.err.println("Error: Date could not be parsed.");
+                    datePickerField.setValue(null); // Set to null if parsing fails
                 }
+            }
             editionField.setText(book.getEdition());
             coverField.setText(book.getCover());
             languageField.setText(book.getLanguage());
@@ -204,6 +201,21 @@ public class EditController {
 
 
 
+    }
+    private LocalDate parseDate(String dateString) {
+        // List of all date formats that you want to support
+        List<String> dateFormats = Arrays.asList("yyyy-MM-dd", "dd.MM.yyyy");
+
+        for (String format : dateFormats) {
+            try {
+                return LocalDate.parse(dateString, DateTimeFormatter.ofPattern(format));
+            } catch (DateTimeParseException e) {
+                // Try the next format
+            }
+        }
+        // If none of the formats work, log an error or handle the case
+        System.err.println("Failed to parse the date: " + dateString);
+        return null; // or throw an IllegalArgumentException
     }
 
     private boolean isISBNUnique(String isbn) {

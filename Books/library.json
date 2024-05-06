@@ -157,9 +157,9 @@
     "translators": [
       ""
     ],
-    "isbn": "4658-8768-4868-6",
+    "isbn": "4658-8768-4868-1",
     "publisher": "Crown Publishing Group",
-    "date": "2024-05-30",
+    "date": "2024-05-09",
     "edition": "1",
     "cover": "src\\coverImages\\0553418025.jpg",
     "language": "English",
@@ -257,9 +257,9 @@
     "translators": [
       ""
     ],
-    "isbn": "6747-5456-4754-5",
+    "isbn": "6747-5456-4754-2",
     "publisher": "Riverhead Books",
-    "date": "2003-06-18",
+    "date": "2003-06-22",
     "edition": "2",
     "cover": "src/coverImages/default_image.jpg",
     "language": "English",
@@ -322,10 +322,10 @@
     "translators": [
       "Sabri Kames"
     ],
-    "isbn": "6053754486",
+    "isbn": "4563-4876-5346-5",
     "publisher": "Kirmizi Kedi Yayinevi",
-    "date": "14.05.2013",
-    "edition": "Turkish Edition",
+    "date": "2013-05-12",
+    "edition": "2",
     "cover": "src/coverImages/default_image.jpg",
     "language": "Turkish",
     "rating": "4.7",
