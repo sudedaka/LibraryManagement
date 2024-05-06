@@ -101,7 +101,7 @@
       "J.D. Salinger"
     ],
     "translators": [],
-    "isbn": "9780-3167-6948-8",
+    "isbn": "3243-2534-6545-5",
     "publisher": "Little, Brown and Company",
     "date": "1951-07-16",
     "edition": "1",
@@ -117,7 +117,7 @@
     "subtitle": "",
     "authors": [],
     "translators": [],
-    "isbn": "1234-5678-9045-6",
+    "isbn": "1234-5465-4756-7",
     "publisher": "",
     "edition": "",
     "cover": "",
@@ -129,7 +129,7 @@
     "subtitle": "",
     "authors": [],
     "translators": [],
-    "isbn": "1234-5678-9123-4",
+    "isbn": "2538-4427-3913-2",
     "publisher": "",
     "edition": "",
     "cover": "",
@@ -137,11 +137,11 @@
     "rating": ""
   },
   {
-    "title": "",
+    "title": "a",
     "subtitle": "",
     "authors": [],
     "translators": [],
-    "isbn": "3453-4156-7890-1",
+    "isbn": "2345-4679-0000-3",
     "publisher": "",
     "edition": "",
     "cover": "",
@@ -149,18 +149,231 @@
     "rating": ""
   },
   {
-    "title": "aaa",
+    "title": "The Martian",
     "subtitle": "",
-    "authors": [],
-    "translators": [],
-    "isbn": "1234-5434-3546-3",
-    "publisher": "",
-    "edition": "",
-    "cover": "",
-    "language": "",
-    "rating": "",
+    "authors": [
+      "Andy Weir"
+    ],
+    "translators": [
+      ""
+    ],
+    "isbn": "4658-8768-4868-6",
+    "publisher": "Crown Publishing Group",
+    "date": "2024-05-30",
+    "edition": "1",
+    "cover": "src\\coverImages\\0553418025.jpg",
+    "language": "English",
+    "rating": "4.8",
     "tags": [
-      "a"
+      "science fiction",
+      "space",
+      "survival"
+    ]
+  },
+  {
+    "title": "Harry Potter and the Philosopher\u0027s Stone",
+    "subtitle": "",
+    "authors": [
+      "J.K. Rowling"
+    ],
+    "translators": [
+      ""
+    ],
+    "isbn": "3579-4836-9863-4",
+    "publisher": "Bloomsbury",
+    "date": "1997-07-20",
+    "edition": "1",
+    "cover": "src\\coverImages\\0747532745.jpg",
+    "language": "English",
+    "rating": "4.8",
+    "tags": [
+      "fantasy",
+      "young adult"
+    ]
+  },
+  {
+    "title": "Second Book",
+    "subtitle": "",
+    "authors": [
+      "Bob Smith"
+    ],
+    "translators": [],
+    "isbn": "0987654321",
+    "publisher": "Beta Publishers",
+    "date": "2023-02-20",
+    "edition": "",
+    "language": "French",
+    "rating": "3.8",
+    "tags": [
+      "literature",
+      "novel"
+    ]
+  },
+  {
+    "title": "Another Sample Book",
+    "subtitle": "",
+    "authors": [
+      "Clara Oswald"
+    ],
+    "translators": [
+      ""
+    ],
+    "isbn": "1122334455",
+    "publisher": "Gamma Publishing",
+    "date": "2021-05-10",
+    "edition": "",
+    "cover": "src/coverImages/default_image.jpg",
+    "language": "Spanish",
+    "rating": "4.2",
+    "tags": [
+      "history",
+      "biography"
+    ]
+  },
+  {
+    "title": "First Book",
+    "subtitle": "",
+    "authors": [
+      "Alice Johnson"
+    ],
+    "translators": [],
+    "isbn": "1234567890",
+    "publisher": "Alpha Publishing",
+    "date": "2022-12-15",
+    "edition": "",
+    "language": "English",
+    "rating": "4",
+    "tags": [
+      "science",
+      "technology"
+    ]
+  },
+  {
+    "title": "The Kite Runner",
+    "subtitle": "",
+    "authors": [
+      "Khaled Hosseini"
+    ],
+    "translators": [
+      ""
+    ],
+    "isbn": "6747-5456-4754-5",
+    "publisher": "Riverhead Books",
+    "date": "2003-06-18",
+    "edition": "2",
+    "cover": "src/coverImages/default_image.jpg",
+    "language": "English",
+    "rating": "4.5",
+    "tags": [
+      "drama",
+      "historical fiction"
+    ]
+  },
+  {
+    "title": "ooooooo",
+    "subtitle": "",
+    "authors": [
+      "John Doe",
+      "Jane Doe"
+    ],
+    "translators": [
+      ""
+    ],
+    "isbn": "213456897465",
+    "publisher": "Sample Publisher",
+    "date": "2023-01-01",
+    "edition": "",
+    "cover": "src/coverImages/default_image.jpg",
+    "language": "JAPANESEEEEE",
+    "rating": "4.5",
+    "tags": [
+      "fiction",
+      "novel"
+    ]
+  },
+  {
+    "title": "xxxxxxxx",
+    "subtitle": "",
+    "authors": [
+      "John Doe",
+      "Jane Doe"
+    ],
+    "translators": [
+      ""
+    ],
+    "isbn": "555666784123",
+    "publisher": "Sample Publisher",
+    "date": "2023-01-01",
+    "edition": "",
+    "cover": "src/coverImages/default_image.jpg",
+    "language": "JAPANESEEEEE",
+    "rating": "4.5",
+    "tags": [
+      "fiction",
+      "novel"
+    ]
+  },
+  {
+    "title": "Suc ve Ceza",
+    "subtitle": "",
+    "authors": [
+      "Fyodor Dostoyevsky"
+    ],
+    "translators": [
+      "Sabri Kames"
+    ],
+    "isbn": "6053754486",
+    "publisher": "Kirmizi Kedi Yayinevi",
+    "date": "14.05.2013",
+    "edition": "Turkish Edition",
+    "cover": "src/coverImages/default_image.jpg",
+    "language": "Turkish",
+    "rating": "4.7",
+    "tags": [
+      "classic",
+      "crime"
+    ]
+  },
+  {
+    "title": "Sample Book",
+    "subtitle": "",
+    "authors": [
+      "John Doe",
+      "Jane Doe"
+    ],
+    "translators": [
+      ""
+    ],
+    "isbn": "2342-4323-5254-3",
+    "publisher": "Sample Publisher",
+    "date": "2024-05-24",
+    "edition": "",
+    "cover": "src/coverImages/default_image.jpg",
+    "language": "English",
+    "rating": "4.5",
+    "tags": [
+      "fiction",
+      "novel"
+    ]
+  },
+  {
+    "title": "hhhhhhhh",
+    "subtitle": "",
+    "authors": [
+      "Clara Oswald"
+    ],
+    "translators": [
+      ""
+    ],
+    "isbn": "8976634578",
+    "publisher": "Gamma Publishing",
+    "date": "2021-05-10",
+    "edition": "",
+    "language": "Spanish",
+    "rating": "4.2",
+    "tags": [
+      "history",
+      "biography"
     ]
   }
 ]

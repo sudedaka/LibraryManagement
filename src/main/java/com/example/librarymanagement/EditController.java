@@ -24,6 +24,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -157,10 +159,18 @@ public class EditController {
             }
             isbnField.setText(book.getIsbn());
             publisherField.setText(book.getPublisher());
-            if (book.getDate() != null && !book.getDate().isEmpty()) {
-                LocalDate date = LocalDate.parse(book.getDate());
-                datePickerField.setValue(date);
-            }
+
+
+                // Attempt to parse and set the date
+                if (book.getDate() != null && !book.getDate().isEmpty()) {
+                    try {
+                        LocalDate date = LocalDate.parse(book.getDate(), DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+                        datePickerField.setValue(date);
+                    } catch (DateTimeParseException ex) {
+                        System.err.println("Error: Date could not be parsed. " + ex.getMessage());
+                        datePickerField.setValue(null);  // Set to null if parsing fails
+                    }
+                }
             editionField.setText(book.getEdition());
             coverField.setText(book.getCover());
             languageField.setText(book.getLanguage());
@@ -168,29 +178,31 @@ public class EditController {
             if(book.getTags()!=null) {
                 tagsListView.setItems(FXCollections.observableArrayList(book.getTags()));
             }
+            isbnField.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("[0-9-]*") || newValue.replaceAll("[^0-9]", "").length() > 13) {
+                    String sanitized = newValue.replaceAll("[^0-9-]", ""); // Remove all but digits and hyphens
+                    StringBuilder formatted = new StringBuilder();
+                    int digitCount = 0;
 
+                    for (int i = 0; i < sanitized.length() && digitCount < 13; i++) {
+                        char ch = sanitized.charAt(i);
+                        if (Character.isDigit(ch)) {
+                            if ((digitCount == 3 || digitCount == 5 || digitCount == 9) && formatted.length() > 0) {
+                                formatted.append('-'); // Add hyphen at typical ISBN partitions
+                            }
+                            formatted.append(ch);
+                            digitCount++;
+                        }
+                    }
+                    isbnField.setText(formatted.toString());
+                }
+            });
 
         }
 
-        isbnField.textProperty().addListener((observable, oldValue, newValue) -> {
-            // If the input value from the user is not a digit or exceeds 13 characters
-            if (!newValue.matches("\\d+") || newValue.length() > 13) {
-                // Remove any non-digit characters and limit to 13 characters
-                String formattedISBN = newValue.replaceAll("[^\\d]", "");
-                if (formattedISBN.length() > 13) {
-                    formattedISBN = formattedISBN.substring(0, 13);
-                }
-                // Add "-" after every four characters
-                StringBuilder formattedValue = new StringBuilder();
-                for (int i = 0; i < formattedISBN.length(); i++) {
-                    if (i > 0 && i % 4 == 0) {
-                        formattedValue.append("-");
-                    }
-                    formattedValue.append(formattedISBN.charAt(i));
-                }
-                isbnField.setText(formattedValue.toString());
-            }
-        });
+
+
+
 
     }
 
@@ -264,6 +276,11 @@ public class EditController {
                 alert.showAndWait();
 
             }
+            // ISBN is unique or not checking
+            if (!isISBNUnique(isbn)) {
+                showErrorAlert("ISBN must be unique.");
+                return;
+            }
             // ISBN is empty or not checking
             if (isbn.isBlank()) {
                 showErrorAlert("ISBN cannot be empty.");
@@ -309,15 +326,11 @@ public class EditController {
         String subtitle = subtitleField.getText();
         return subtitle != null ? subtitle : "";
     }
-
     public String getISBN() {
         String isbn = isbnField.getText();
         if (isbn == null || isbn.isBlank()) {
             return ""; // Return empty string if ISBN field is empty
-        }
-
-        else
-        {
+        } else {
             String formattedISBN = isbn.replaceAll("[^\\d]", ""); // Remove any non-digit characters
             if (formattedISBN.length() > 13) {     // Limit to 13 characters
                 formattedISBN = formattedISBN.substring(0, 13);

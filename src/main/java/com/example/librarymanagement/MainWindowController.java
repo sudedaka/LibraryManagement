@@ -231,6 +231,7 @@ public class MainWindowController extends Application {
         stage.showAndWait();
         exportToJson("library.json");
 
+
     }
 
     @FXML
