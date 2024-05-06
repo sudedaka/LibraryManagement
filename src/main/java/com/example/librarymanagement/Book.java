@@ -13,10 +13,9 @@ public class Book {
     private String language;
     private String rating;
     private ArrayList<String> tags;
-    private String numberofPages;
-    private String coverType;
 
-    public Book(String title,String subtitle,ArrayList<String>authors,ArrayList<String>translators, String isbn,String publisher,String date, String edition,String cover,String language,String rating,ArrayList<String>tags,String numberofPages,String coverType){
+
+    public Book(String title,String subtitle,ArrayList<String>authors,ArrayList<String>translators, String isbn,String publisher,String date, String edition,String cover,String language,String rating,ArrayList<String>tags){
         this.title=title;
         this.subtitle=subtitle;
         this.authors=authors;
@@ -29,8 +28,7 @@ public class Book {
         this.language=language;
         this.rating=rating;
         this.tags=tags;
-        this.numberofPages=numberofPages;
-        this.coverType=coverType;
+
     }
 
     public String getPublisher() {
@@ -49,13 +47,6 @@ public class Book {
         return title;
     }
 
-    public String getNumberofPages() {
-        return numberofPages;
-    }
-
-    public String getCoverType() {
-        return coverType;
-    }
 
     public String getSubtitle() {
         return subtitle;
@@ -132,13 +123,7 @@ public class Book {
         this.tags = tags;
     }
 
-    public void setPageNumber(String numberofPages) {
-        this.numberofPages = numberofPages;
-    }
 
-    public void setCoverType(String coverType) {
-        this.coverType = coverType;
-    }
     public void setTitle(String title) {
         this.title = title;
     }

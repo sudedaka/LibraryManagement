@@ -79,10 +79,7 @@ public class MainWindowController extends Application {
 
     @FXML
     private TableColumn<Book, String> tagsCol;
-    @FXML
-    private TableColumn<Book, String> numberOfPagesCol;
-    @FXML
-    private TableColumn<Book, String> coverTypeCol;
+
     @FXML
     private ArrayList<Book> books = new ArrayList<>(); // Initialize the ArrayList
 
@@ -147,8 +144,7 @@ public class MainWindowController extends Application {
         languageCol.setCellValueFactory(new PropertyValueFactory<>("language"));
         ratingCol.setCellValueFactory(new PropertyValueFactory<>("rating"));
         tagsCol.setCellValueFactory(new PropertyValueFactory<>("tags"));
-        numberOfPagesCol.setCellValueFactory(new PropertyValueFactory<>("numberofPages"));
-        coverTypeCol.setCellValueFactory(new PropertyValueFactory<>("coverType"));
+
     }
 
     private void loadBooksFromFile() {  // Method to load books from a JSON file.
@@ -181,9 +177,7 @@ public class MainWindowController extends Application {
                         (book.getEdition() != null && book.getEdition().toLowerCase().contains(query)) ||
                         (book.getLanguage() != null && book.getLanguage().toLowerCase().contains(query)) ||
                         (book.getRating() != null && book.getRating().toLowerCase().contains(query)) ||
-                        containsIgnoreCase(book.getTags(), query) ||
-                        String.valueOf(book.getNumberofPages()).toLowerCase().contains(query) ||
-                        (book.getCoverType() != null && book.getCoverType().toLowerCase().contains(query))) {
+                        containsIgnoreCase(book.getTags(), query) ) {
                     filteredBooks.add(book);
                 }
             }
@@ -328,8 +322,8 @@ public class MainWindowController extends Application {
     }
 
     @FXML
-    public void addBook(String title, String subtitle, ArrayList<String> authors, ArrayList<String> translators, String isbn, String publisher, String date, String edition, String cover, String language, String rating, ArrayList<String> tags, String pageNumber, String coverType) {
-        Book newBook = new Book(title, subtitle, authors, translators, isbn, publisher, date, edition, cover, language, rating, tags, pageNumber, coverType);
+    public void addBook(String title, String subtitle, ArrayList<String> authors, ArrayList<String> translators, String isbn, String publisher, String date, String edition, String cover, String language, String rating, ArrayList<String> tags) {
+        Book newBook = new Book(title, subtitle, authors, translators, isbn, publisher, date, edition, cover, language, rating, tags);
         books.add(newBook);
     }
 

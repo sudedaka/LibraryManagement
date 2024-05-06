@@ -44,10 +44,6 @@ public class ListController {
     @FXML
     private Label tagsLbl;
     @FXML
-    private Label numberOfPagesLbl;
-    @FXML
-    private Label coverTypeLbl;
-    @FXML
     private ImageView coverImage;
     @FXML
     private ArrayList<Book> books = new ArrayList<>(); // Initialize the ArrayList
@@ -71,8 +67,6 @@ public class ListController {
                     ratingLbl.setText(selectedBook.getRating());
                     String tags = selectedBook.getTags() != null ? String.join(", ", selectedBook.getTags()) : "";
                     tagsLbl.setText(tags);
-                    numberOfPagesLbl.setText(selectedBook.getNumberofPages());
-                    coverTypeLbl.setText(selectedBook.getCoverType());
 
                 }); String imageUrl = selectedBook.getCover();
                 try {
@@ -185,18 +179,6 @@ public class ListController {
         return rating;
     }
 
-    public String getPageNumber()
-    {
-        String pageNumber = numberOfPagesLbl.getText();
-        if(pageNumber.isBlank()) return null;
-        return pageNumber;
-    }
-    public String getCoverType()
-    {
-        String coverType = coverTypeLbl.getText();
-        if(coverType.isBlank()) return null;
-        return coverType;
-    }
 
 
 }

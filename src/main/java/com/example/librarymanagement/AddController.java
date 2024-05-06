@@ -62,10 +62,6 @@ public class AddController {
     @FXML
     private TextField tagsField;
     @FXML
-    private TextField pageNumberField;
-    @FXML
-    private TextField coverTypeField;
-    @FXML
     private ListView<String> tagsListView;
     @FXML
     private DatePicker datePickerField;
@@ -233,12 +229,8 @@ public class AddController {
         String language = getLanguage();
         String rating = getRating();
         ArrayList<String> tags = getTags();
-        String pageNumber = getPageNumber();
-        String coverType = getCoverType();
 
-        if (pageNumber == null) {
-            return;
-        }
+
         if (rating == null) {
             return;
         }
@@ -271,9 +263,7 @@ public class AddController {
                 (cover == null || cover.isBlank()) &&
                 (language == null || language.isBlank()) &&
                 (rating == null || rating.isBlank()) &&
-                (tags == null || tags.isEmpty()) &&
-                (pageNumber == null || pageNumber.isBlank()) &&
-                (coverType == null || coverType.isBlank())) {
+                (tags == null || tags.isEmpty()) ) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning!");
                 alert.setHeaderText("No Information Entered!");
@@ -292,7 +282,7 @@ public class AddController {
             return;
         }
         else {
-            Book newBook = new Book(title, subtitle, authors, translators, isbn, publisher, date, edition, cover, language, rating, tags, pageNumber, coverType);
+            Book newBook = new Book(title, subtitle, authors, translators, isbn, publisher, date, edition, cover, language, rating, tags);
             books.add(newBook);
             clearFields(); // Clear all the fields.
             updateBookTableView(); //Updates the TableView information at the MainWindow.
@@ -314,8 +304,6 @@ public class AddController {
         ratingField.clear();
         tagsField.clear();
         tagsListView.getItems().clear();
-        pageNumberField.clear();
-        coverTypeField.clear();
     }
 
     public String getTitle() {
@@ -462,24 +450,6 @@ public class AddController {
         } else {
             return selectedDate.toString(); // You can format the date as needed
         }
-    }
-    public String getPageNumber()
-    {
-        String pageNumber = pageNumberField.getText();
-        if (pageNumber==null||pageNumber.isBlank()) {
-            return "";}
-        else if  (pageNumber.matches("\\d+")) {
-            return pageNumber;
-        } else {
-            // If not numeric, show error message
-            showErrorAlert("Page Number must be numeric.");
-            return null;
-        }
-    }
-    public String getCoverType()
-    {
-        String coverType = coverTypeField.getText();
-        return coverType != null ? coverType: "";
     }
 
     private void showErrorAlert(String message) {

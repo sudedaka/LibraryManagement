@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.MainWindowController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarymanagement.MainWindowController">
     <children>
         <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -109,8 +109,6 @@
                                 <TableColumn fx:id="languageCol" prefWidth="75.0" text="Language" />
                                 <TableColumn fx:id="ratingCol" prefWidth="75.0" text="Rating" />
                                 <TableColumn fx:id="tagsCol" prefWidth="75.0" text="Tags" />
-                                <TableColumn fx:id="numberOfPagesCol" prefWidth="75.0" text="Number of Pages" />
-                                <TableColumn fx:id="coverTypeCol" prefWidth="75.0" text="Cover Type" />
                             </columns>
                             <HBox.margin>
                                 <Insets />

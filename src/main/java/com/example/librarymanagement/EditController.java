@@ -63,10 +63,7 @@ public class EditController {
     private TextField ratingField;
     @FXML
     private TextField tagsField;
-    @FXML
-    private TextField pageNumberField;
-    @FXML
-    private TextField coverTypeField;
+
     @FXML
     private ListView<String> tagsListView;
     @FXML
@@ -171,8 +168,7 @@ public class EditController {
             if(book.getTags()!=null) {
                 tagsListView.setItems(FXCollections.observableArrayList(book.getTags()));
             }
-            pageNumberField.setText(book.getNumberofPages());
-            coverTypeField.setText(book.getCoverType());
+
 
         }
 
@@ -225,12 +221,9 @@ public class EditController {
             String language = getLanguage();
             String rating = getRating();
             ArrayList<String> tags = getTags();
-            String pageNumber = getPageNumber();
-            String coverType = getCoverType();
+
             // creates new object with changed information then changes places with old one
-            if (pageNumber == null) {
-                return;
-            }
+
             if (rating == null) {
                 return;
             }
@@ -263,9 +256,7 @@ public class EditController {
                     (cover == null || cover.isBlank()) &&
                     (language == null || language.isBlank()) &&
                     (rating == null || rating.isBlank()) &&
-                    (tags == null || tags.isEmpty()) &&
-                    (pageNumber == null || pageNumber.isBlank()) &&
-                    (coverType == null || coverType.isBlank())) {
+                    (tags == null || tags.isEmpty())) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning");
                 alert.setHeaderText("No Information Entered");
@@ -279,8 +270,7 @@ public class EditController {
                 return;
             }
             else {
-                Book updatedBook = new Book(title, subtitle, authors, translators, isbn, publisher, date,
-                        edition, cover, language, rating, tags, pageNumber, coverType);
+                Book updatedBook = new Book(title, subtitle, authors, translators, isbn, publisher, date, edition, cover, language, rating, tags);
                 books.set(index, updatedBook);
                 updateBookTableView();
                 clearFields();
@@ -303,8 +293,6 @@ public class EditController {
         ratingField.clear();
         tagsField.clear();
         tagsListView.getItems().clear();
-        pageNumberField.clear();
-        coverTypeField.clear();
         datePickerField.setValue(null);
     }
     @FXML
@@ -458,24 +446,7 @@ public class EditController {
             return selectedDate.toString(); // You can format the date as needed
         }
     }
-    public String getPageNumber()
-    {
-        String pageNumber = pageNumberField.getText();
-        if (pageNumber==null||pageNumber.isBlank()) {
-            return "";}
-        else if  (pageNumber.matches("\\d+")) {
-            return pageNumber;
-        } else {
-            // If not numeric, show error message
-            showErrorAlert("Page Number must be numeric.");
-            return null;
-        }
-    }
-    public String getCoverType()
-    {
-        String coverType = coverTypeField.getText();
-        return coverType != null ? coverType: "";
-    }
+
     private void showErrorAlert(String message) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Input Error");
