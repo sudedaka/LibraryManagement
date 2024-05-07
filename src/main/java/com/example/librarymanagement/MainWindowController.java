@@ -158,20 +158,34 @@ public class MainWindowController extends Application {
         }
     }
 
+    private String normalizeISBN(String isbn) {
+        if (isbn == null) {
+            return ""; // Return empty string if ISBN is null
+        }
+        return isbn.replaceAll("-", "").toLowerCase(); // Remove hyphens and convert to lowercase
+    }
+
     @FXML
     private void search() {
         String query = searchField.getText().toLowerCase().trim();
         ObservableList<Book> filteredBooks = FXCollections.observableArrayList();
 
+
+
         if (query.isEmpty()) {
             filteredBooks.addAll(books); // Return all books if search query is empty
         } else {
+            String normalizedQuery = normalizeISBN(query); // Normalize the query for ISBN comparison
+
             for (Book book : books) {
+                String normalizedISBN = normalizeISBN(book.getIsbn()); // Normalize stored ISBN
+
                 if (book.getTitle().toLowerCase().contains(query) ||
                         book.getSubtitle().toLowerCase().contains(query) ||
                         containsIgnoreCase(book.getAuthors(), query) ||
                         containsIgnoreCase(book.getTranslators(), query) ||
-                        (book.getIsbn() != null && book.getIsbn().toLowerCase().contains(query)) ||
+                      //  (book.getIsbn() != null && book.getIsbn().toLowerCase().contains(query)) ||
+                        (normalizedISBN.contains(normalizedQuery)) ||
                         (book.getPublisher() != null && book.getPublisher().toLowerCase().contains(query)) ||
                         (book.getDate() != null && book.getDate().toString().toLowerCase().contains(query)) ||
                         (book.getEdition() != null && book.getEdition().toLowerCase().contains(query)) ||
