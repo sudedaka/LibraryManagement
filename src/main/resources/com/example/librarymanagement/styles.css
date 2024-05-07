@@ -2,7 +2,6 @@
 .button {
   -fx-background-color: #464646;
   -fx-text-fill: white;
-  -fx-transition-duration: 0.4s;
 }
 
 .button:hover {
@@ -20,13 +19,25 @@
 
 /* Define the style for the selected row text */
 .table-row-cell:selected {
-  -fx-background-color: #9dabaa; /* Change this color to your desired background color */
+  -fx-background-color: #cbbeb5; /* Change this color to your desired background color */
   -fx-text-width: 2px;
 }
 
 #applyButton:hover{
   -fx-border-style: solid;
-  -fx-border-color: #cc0000;
-  -fx-text-fill: #cc0000;
+  -fx-border-color: green;
+  -fx-text-fill: green;
+}
+
+.addButton:hover{
+  -fx-border-style: solid;
+  -fx-border-color: green;
+  -fx-text-fill: green;
+}
+
+.applyButton:hover{
+  -fx-border-style: solid;
+  -fx-border-color: green;
+  -fx-text-fill: green;
 }
 

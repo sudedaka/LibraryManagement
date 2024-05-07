@@ -218,14 +218,15 @@ public class EditController {
         return null; // or throw an IllegalArgumentException
     }
 
-    private boolean isISBNUnique(String isbn) {
+    private boolean isISBNUnique(String isbn, Book currentBook) {
         for (Book book : books) {
-            if (book.getIsbn().equals(isbn)) {
-                return false; //Returns false if the ISBN already exists in the list
+            if (book.getIsbn().equals(isbn) && !book.equals(currentBook)) {
+                return false; // Returns false if there's another book with the same ISBN
             }
         }
-        return true; // Returns true if the ISBN doesn't exist in the list
+        return true; // Returns true if ISBN is unique or belongs to the current book
     }
+
 
     @FXML
     public void editButtonClick(ActionEvent event) {
@@ -288,11 +289,12 @@ public class EditController {
                 alert.showAndWait();
 
             }
-            // ISBN is unique or not checking
-            if (!isISBNUnique(isbn)) {
+            boolean isUnique = isISBNUnique(isbn, bookSelected);
+            if (!isUnique) {
                 showErrorAlert("ISBN must be unique.");
                 return;
             }
+
             // ISBN is empty or not checking
             if (isbn.isBlank()) {
                 showErrorAlert("ISBN cannot be empty.");

@@ -412,15 +412,19 @@ public class MainWindowController extends Application {
                 FXMLLoader fxmlLoader = new FXMLLoader(MainWindowController.class.getResource("list.fxml")); // Load the FXML file
 
                 Scene scene = new Scene(fxmlLoader.load(), 320, 240); // Create the scene
+                stage.setMinWidth(800);
+                stage.setMinHeight(750);
+                stage.setMaxWidth(800);
+                stage.setMaxHeight(750);
+
+                // Optionally disable resizing
                 stage.setTitle("List Screen"); // Set the stage title
-                stage.setMaximized(true); // Maximize the stage
                 stage.setScene(scene); // Set the scene to the stage
                 // Get the controller instance
                 ListController listController = fxmlLoader.getController();
 
                 // Initialize the controller with the selected book and other necessary data
                 listController.initialize(selectedBook, bookTableView, books,event);
-
 
                 // Show the stage
                 stage.showAndWait();

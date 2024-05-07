@@ -1,7 +1,7 @@
 [
   {
     "title": "Animal Farm",
-    "subtitle": "",
+    "subtitle": "deneme",
     "authors": [
       " George Orwell"
     ],
@@ -19,12 +19,12 @@
   },
   {
     "title": "To Kill a Mockingbird",
-    "subtitle": "",
+    "subtitle": "Deneme3",
     "authors": [
       "Harper Lee"
     ],
     "translators": [],
-    "isbn": "9780-0611-2008-4",
+    "isbn": "9780-0611-2008-3",
     "publisher": "Harper Perennial Modern Classics",
     "date": "1960-07-11",
     "edition": "1",
@@ -125,30 +125,6 @@
     "rating": "3"
   },
   {
-    "title": "a",
-    "subtitle": "",
-    "authors": [],
-    "translators": [],
-    "isbn": "2538-4427-3913-2",
-    "publisher": "",
-    "edition": "",
-    "cover": "",
-    "language": "",
-    "rating": ""
-  },
-  {
-    "title": "a",
-    "subtitle": "",
-    "authors": [],
-    "translators": [],
-    "isbn": "2345-4679-0000-3",
-    "publisher": "",
-    "edition": "",
-    "cover": "",
-    "language": "",
-    "rating": ""
-  },
-  {
     "title": "The Martian",
     "subtitle": "",
     "authors": [
@@ -218,7 +194,7 @@
     "translators": [
       ""
     ],
-    "isbn": "1122334455",
+    "isbn": "1122-3344-5523-2",
     "publisher": "Gamma Publishing",
     "date": "2021-05-10",
     "edition": "",

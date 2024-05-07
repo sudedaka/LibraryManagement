@@ -75,10 +75,10 @@ public class ListController {
                         if (file.exists()) {
                             Image image = new Image(file.toURI().toString());
                             coverImage.setImage(image);
-                            coverImage.setFitWidth(200);
-                            coverImage.setFitHeight(300);
+                            coverImage.setFitWidth(350);
+                            coverImage.setFitHeight(350);
                         } else {
-                            throw new FileNotFoundException("Dosya bulunamadı: " + imageUrl);
+                            throw new FileNotFoundException("File does not found: " + imageUrl);
                         }
                     } else {
                         String defaultImagePath = "src/images/default.jpg";
@@ -86,8 +86,8 @@ public class ListController {
                         if (defaultImageFile.exists()) {
                             Image defaultImage = new Image(defaultImageFile.toURI().toString());
                             coverImage.setImage(defaultImage);
-                            coverImage.setFitWidth(200);
-                            coverImage.setFitHeight(300);
+                            coverImage.setFitWidth(250);
+                            coverImage.setFitHeight(250);
                         } else {
                             System.out.println("selected file not found " + defaultImagePath);
                         }
@@ -99,8 +99,8 @@ public class ListController {
                     if (defaultImageFile.exists()) {
                         Image defaultImage = new Image(defaultImageFile.toURI().toString());
                         coverImage.setImage(defaultImage);
-                        coverImage.setFitWidth(200);
-                        coverImage.setFitHeight(300);
+                        coverImage.setFitWidth(250);
+                        coverImage.setFitHeight(250);
                     } else {
                         System.out.println("image not found " + defaultImagePath);
                     }
