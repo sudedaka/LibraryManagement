@@ -34,5 +34,41 @@
     "tags": [
       "Southern Gothic Fiction"
     ]
+  },
+  {
+    "title": "as",
+    "subtitle": "",
+    "authors": [],
+    "translators": [],
+    "isbn": "2222-2222-2222-2",
+    "publisher": "",
+    "edition": "",
+    "cover": "",
+    "language": "",
+    "rating": ""
+  },
+  {
+    "title": "",
+    "subtitle": "",
+    "authors": [],
+    "translators": [],
+    "isbn": "4444-4444-4444-4",
+    "publisher": "",
+    "edition": "",
+    "cover": "src/images/Ekran görüntüsü 2024-05-04 130331.png",
+    "language": "",
+    "rating": ""
+  },
+  {
+    "title": "",
+    "subtitle": "",
+    "authors": [],
+    "translators": [],
+    "isbn": "6295-1516-5165-1",
+    "publisher": "",
+    "edition": "",
+    "cover": "images/Ekran görüntüsü 2024-05-04 161858.png",
+    "language": "",
+    "rating": ""
   }
 ]

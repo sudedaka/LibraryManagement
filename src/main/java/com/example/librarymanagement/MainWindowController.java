@@ -33,8 +33,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -103,6 +107,7 @@ public class MainWindowController extends Application {
     private Button searchButton;
 
     private HostServices hostServices;
+
     public void setHostServices(HostServices hostServices) {
         this.hostServices = hostServices;
     }
@@ -171,7 +176,6 @@ public class MainWindowController extends Application {
         ObservableList<Book> filteredBooks = FXCollections.observableArrayList();
 
 
-
         if (query.isEmpty()) {
             filteredBooks.addAll(books); // Return all books if search query is empty
         } else {
@@ -184,14 +188,14 @@ public class MainWindowController extends Application {
                         book.getSubtitle().toLowerCase().contains(query) ||
                         containsIgnoreCase(book.getAuthors(), query) ||
                         containsIgnoreCase(book.getTranslators(), query) ||
-                      //  (book.getIsbn() != null && book.getIsbn().toLowerCase().contains(query)) ||
+                        //  (book.getIsbn() != null && book.getIsbn().toLowerCase().contains(query)) ||
                         (normalizedISBN.contains(normalizedQuery)) ||
                         (book.getPublisher() != null && book.getPublisher().toLowerCase().contains(query)) ||
                         (book.getDate() != null && book.getDate().toString().toLowerCase().contains(query)) ||
                         (book.getEdition() != null && book.getEdition().toLowerCase().contains(query)) ||
                         (book.getLanguage() != null && book.getLanguage().toLowerCase().contains(query)) ||
                         (book.getRating() != null && book.getRating().toLowerCase().contains(query)) ||
-                        containsIgnoreCase(book.getTags(), query) ) {
+                        containsIgnoreCase(book.getTags(), query)) {
                     filteredBooks.add(book);
                 }
             }
@@ -201,7 +205,7 @@ public class MainWindowController extends Application {
     }
 
     private boolean containsIgnoreCase(ArrayList<String> list, String query) {
-        if( list == null ){
+        if (list == null) {
             return false;
         }
         for (String item : list) {
@@ -219,7 +223,6 @@ public class MainWindowController extends Application {
     }
 
 
-
     @FXML
     public void refreshTableView(ActionEvent event) {
         // Clear the current items in the TableView
@@ -232,8 +235,7 @@ public class MainWindowController extends Application {
 
 
     @FXML
-    public void addButtonClick(ActionEvent event) throws IOException
-    {
+    public void addButtonClick(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(MainWindowController.class.getResource("add.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
@@ -241,7 +243,7 @@ public class MainWindowController extends Application {
         stage.setMaximized(true);
         stage.setScene(scene);
         AddController controller = fxmlLoader.getController();
-        controller.initialize(bookTableView,books); //
+        controller.initialize(bookTableView, books); //
         stage.showAndWait();
         exportToJson("library.json");
 
@@ -254,7 +256,8 @@ public class MainWindowController extends Application {
         try (Reader reader = new FileReader(filePath)) {
             JsonElement jsonElement = JsonParser.parseReader(reader);
             if (jsonElement.isJsonArray()) {
-                Type bookListType = new TypeToken<ArrayList<Book>>() {}.getType();
+                Type bookListType = new TypeToken<ArrayList<Book>>() {
+                }.getType();
                 ArrayList<Book> newBooks = gson.fromJson(jsonElement, bookListType);
                 books.addAll(newBooks);
             } else if (jsonElement.isJsonObject()) {
@@ -270,8 +273,6 @@ public class MainWindowController extends Application {
             throw new RuntimeException(e);
         }
     }
-
-
 
 
     @FXML
@@ -320,6 +321,7 @@ public class MainWindowController extends Application {
             throw new RuntimeException(e);
         }
     }
+
     private String userPath;
 
     @FXML
@@ -333,7 +335,7 @@ public class MainWindowController extends Application {
         file.setTitle("Choose to save!");
         File f = file.showSaveDialog(stage);
         exportToJson(f.getAbsolutePath());   // Write data in JSON format to the selected file
-        userPath=f.getAbsolutePath();
+        userPath = f.getAbsolutePath();
     }
 
     @FXML
@@ -341,7 +343,6 @@ public class MainWindowController extends Application {
         Book newBook = new Book(title, subtitle, authors, translators, isbn, publisher, date, edition, cover, language, rating, tags);
         books.add(newBook);
     }
-
 
 
     @FXML
@@ -356,7 +357,7 @@ public class MainWindowController extends Application {
             stage.setMaximized(true);
             stage.setScene(scene);
             EditController editController = fxmlLoader.getController();
-            editController.initialize(selectedBook,bookTableView,books);
+            editController.initialize(selectedBook, bookTableView, books);
             stage.showAndWait();
             exportToJson("library.json");
         }
@@ -401,12 +402,12 @@ public class MainWindowController extends Application {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }else {
+                } else {
                     System.out.println("userPath is not set. Cannot write to user-specified file.");
                 }
 
             }
-        }else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Book Selected");
             alert.setHeaderText(null);
@@ -438,18 +439,29 @@ public class MainWindowController extends Application {
                 ListController listController = fxmlLoader.getController();
 
                 // Initialize the controller with the selected book and other necessary data
-                listController.initialize(selectedBook, bookTableView, books,event);
+                listController.initialize(selectedBook, bookTableView, books, event);
 
                 // Show the stage
                 stage.showAndWait();
             }
         }
     }
+
     @FXML
     public void helpButton(ActionEvent event) throws IOException {
-        File userManual = new File("src/main/resources/UserManual.pdf");
-        if (userManual.exists()) {
-            hostServices.showDocument(userManual.toURI().toString());
+        // UserManual.pdf find in files
+        InputStream inputStream = getClass().getResourceAsStream("/UserManual.pdf");
+
+        if (inputStream != null) {
+            Path tempFile = Files.createTempFile("UserManual", ".pdf");
+            Files.copy(inputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
+            URI fileUri = tempFile.toUri();
+
+            // open pdf file
+            hostServices.showDocument(fileUri.toString());
+
+            //Delete after complete
+            tempFile.toFile().deleteOnExit();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -458,6 +470,7 @@ public class MainWindowController extends Application {
             alert.showAndWait();
         }
     }
+
     public void filterButtonClick(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(MainWindowController.class.getResource("tagfilter.fxml"));

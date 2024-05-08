@@ -49,9 +49,10 @@ public class ListController {
     private ArrayList<Book> books = new ArrayList<>(); // Initialize the ArrayList
 
     @FXML
-    public void listTableRowDoubleClicked(Book selectedBook,MouseEvent event) {
+    public void listTableRowDoubleClicked(Book selectedBook, MouseEvent event) {
         if (event.getClickCount() == 2) {
             if (selectedBook != null) {
+                // Update book details
                 Platform.runLater(() -> {
                     titleLbl.setText(selectedBook.getTitle());
                     subtitleLbl.setText(selectedBook.getSubtitle());
@@ -67,8 +68,10 @@ public class ListController {
                     ratingLbl.setText(selectedBook.getRating());
                     String tags = selectedBook.getTags() != null ? String.join(", ", selectedBook.getTags()) : "";
                     tagsLbl.setText(tags);
+                });
 
-                }); String imageUrl = selectedBook.getCover();
+                // Set book cover
+                String imageUrl = selectedBook.getCover();
                 try {
                     if (imageUrl != null && !imageUrl.isEmpty()) {
                         File file = new File(imageUrl);
@@ -81,37 +84,32 @@ public class ListController {
                             throw new FileNotFoundException("File does not found: " + imageUrl);
                         }
                     } else {
-                        String defaultImagePath = "src/images/default.jpg";
-                        File defaultImageFile = new File(defaultImagePath);
-                        if (defaultImageFile.exists()) {
-                            Image defaultImage = new Image(defaultImageFile.toURI().toString());
-                            coverImage.setImage(defaultImage);
-                            coverImage.setFitWidth(250);
-                            coverImage.setFitHeight(250);
-                        } else {
-                            System.out.println("selected file not found " + defaultImagePath);
-                        }
+                        setDefaultImage();
                     }
                 } catch (FileNotFoundException ex) {
-                    System.out.println("file not found " + ex.getMessage());
-                    String defaultImagePath = "src/images/default.jpg";
-                    File defaultImageFile = new File(defaultImagePath);
-                    if (defaultImageFile.exists()) {
-                        Image defaultImage = new Image(defaultImageFile.toURI().toString());
-                        coverImage.setImage(defaultImage);
-                        coverImage.setFitWidth(250);
-                        coverImage.setFitHeight(250);
-                    } else {
-                        System.out.println("image not found " + defaultImagePath);
-                    }
+                    System.out.println("file not found: " + ex.getMessage());
+                    setDefaultImage();
                 } catch (Exception e) {
                     e.printStackTrace();
+                    setDefaultImage();
                 }
-
-
             }
         }
     }
+
+    private void setDefaultImage() {
+        String defaultImagePath = "/images/default.jpg"; // Resource path
+        URL defaultImageUrl = getClass().getResource(defaultImagePath);
+        if (defaultImageUrl != null) {
+            Image defaultImage = new Image(defaultImageUrl.toString());
+            coverImage.setImage(defaultImage);
+            coverImage.setFitWidth(250);
+            coverImage.setFitHeight(250);
+        } else {
+            System.out.println("Default image not found at: " + defaultImagePath);
+        }
+    }
+
     private void openDetailsScreen(Book selectedBook) {
 
     }

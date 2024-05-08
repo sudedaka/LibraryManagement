@@ -491,7 +491,7 @@ public class EditController {
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             // image chosen
-            String imagesDirectory = "src/images/";
+            String imagesDirectory = "images/";
             File imagesDir = new File(imagesDirectory);
             if (!imagesDir.exists()) {
                 imagesDir.mkdirs();
